@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.superrecyclerview.R;
 import com.superrecyclerview.interfaces.IRefreshHeader;
 
-public class LHeader extends LinearLayout implements IRefreshHeader {
+public class DefultHeader extends LinearLayout implements IRefreshHeader {
 
     private String strInfo1 = "下拉刷新";
     private String strInfo2 = "释放立即刷新";
@@ -43,11 +43,11 @@ public class LHeader extends LinearLayout implements IRefreshHeader {
     public int mMeasuredHeight;
 
 
-    public LHeader(Context context) {
+    public DefultHeader(Context context) {
         this(context, null);
     }
 
-    public LHeader(Context context, AttributeSet attrs) {
+    public DefultHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }

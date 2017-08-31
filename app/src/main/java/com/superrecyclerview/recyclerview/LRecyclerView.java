@@ -117,10 +117,10 @@ public class LRecyclerView extends RecyclerView {
     private void init() {
         mTouchSlop = ViewConfiguration.get(getContext().getApplicationContext()).getScaledTouchSlop();
         if (mRefreshEnabled) {
-            setRefreshHeader(new LHeader(getContext().getApplicationContext()));
+            setRefreshHeader(new DefultHeader(getContext().getApplicationContext()));
         }
         if (mLoadMoreEnabled) {
-            setLoadMoreFooter(new LFooter(getContext().getApplicationContext()));
+            setLoadMoreFooter(new DefultFooter(getContext().getApplicationContext()));
         }
     }
 
@@ -413,8 +413,8 @@ public class LRecyclerView extends RecyclerView {
     }
 
     public void setArrowImageView(int resId) {
-        if (mRefreshHeader != null && mRefreshHeader instanceof LHeader) {
-            ((LHeader) mRefreshHeader).setArrowImageView(resId);
+        if (mRefreshHeader != null && mRefreshHeader instanceof DefultHeader) {
+            ((DefultHeader) mRefreshHeader).setArrowImageView(resId);
         }
     }
 
@@ -427,8 +427,8 @@ public class LRecyclerView extends RecyclerView {
     }
 
     public void setOnNetWorkErrorListener(final OnNetWorkErrorListener listener) {
-        final LFooter loadingFooter = ((LFooter) mFootView);
-        loadingFooter.setState(LFooter.State.NetWorkError);
+        final DefultFooter loadingFooter = ((DefultFooter) mFootView);
+        loadingFooter.setState(DefultFooter.State.NetWorkError);
         loadingFooter.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -439,31 +439,31 @@ public class LRecyclerView extends RecyclerView {
     }
 
     public void setHeaderViewColor(int hintColor, int backgroundColor) {
-        if (mRefreshHeader != null && mRefreshHeader instanceof LHeader) {
-            LHeader refreshHeader = ((LHeader) mRefreshHeader);
+        if (mRefreshHeader != null && mRefreshHeader instanceof DefultHeader) {
+            DefultHeader refreshHeader = ((DefultHeader) mRefreshHeader);
             refreshHeader.setHintTextColor(hintColor);
             refreshHeader.setViewBackgroundColor(backgroundColor);
         }
     }
 
     public void setFooterViewColor(int hintColor, int backgroundColor) {
-        if (mLoadMoreFooter != null && mLoadMoreFooter instanceof LFooter) {
-            LFooter loadingFooter = ((LFooter) mLoadMoreFooter);
+        if (mLoadMoreFooter != null && mLoadMoreFooter instanceof DefultFooter) {
+            DefultFooter loadingFooter = ((DefultFooter) mLoadMoreFooter);
             loadingFooter.setHintTextColor(hintColor);
             loadingFooter.setViewBackgroundColor(backgroundColor);
         }
     }
 
     public void setHeaderViewHint(String str1, String str2, String str3, String str4) {
-        if (mRefreshHeader != null && mRefreshHeader instanceof LHeader) {
-            LHeader refreshHeader = ((LHeader) mRefreshHeader);
+        if (mRefreshHeader != null && mRefreshHeader instanceof DefultHeader) {
+            DefultHeader refreshHeader = ((DefultHeader) mRefreshHeader);
             refreshHeader.setHeaderViewHint(str1, str2, str3, str4);
         }
     }
 
     public void setFooterViewHint(String loading, String noMore, String noNetWork) {
-        if (mLoadMoreFooter != null && mLoadMoreFooter instanceof LFooter) {
-            LFooter loadingFooter = ((LFooter) mLoadMoreFooter);
+        if (mLoadMoreFooter != null && mLoadMoreFooter instanceof DefultFooter) {
+            DefultFooter loadingFooter = ((DefultFooter) mLoadMoreFooter);
             loadingFooter.setFooterViewHint(loading, noMore, noNetWork);
         }
     }

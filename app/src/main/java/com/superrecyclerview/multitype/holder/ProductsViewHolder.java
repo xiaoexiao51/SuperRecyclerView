@@ -6,7 +6,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.base.SuperRecyclerAdapter;
+import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.multitype.adapter.ProductsAdapter;
 import com.superrecyclerview.multitype.type.ProductList;
 import com.superrecyclerview.multitype.type.Visitable;
@@ -37,13 +37,13 @@ public class ProductsViewHolder extends BetterViewHolder {
         final ProductList productList = (ProductList) visitable;
         final ProductsAdapter adapter = new ProductsAdapter(productList.products);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new SuperRecyclerAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 MessageUtils.showInfo(mContext, productList.products.get(position).title);
             }
         });
-        adapter.setOnLongClickListener(new SuperRecyclerAdapter.OnItemLongClickListener() {
+        adapter.setOnLongClickListener(new BaseRecyclerAdapter.OnItemLongClickListener() {
             @Override
             public void onLongClick(View itemView, int position) {
                 adapter.delete(position);

@@ -14,12 +14,12 @@ import java.util.List;
  * Created by MMM on 2016/8/8.
  * 打造通用适配器SuperRecyclerAdapter
  */
-public abstract class SuperRecyclerAdapter<T> extends RecyclerView.Adapter<SuperViewHolder> {
+public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
     protected final List<T> mItems;
     protected Context mContext;
 
-    public SuperRecyclerAdapter(List<T> items) {
+    public BaseRecyclerAdapter(List<T> items) {
         mItems = (items != null) ? items : new ArrayList<T>();
     }
 
@@ -29,14 +29,14 @@ public abstract class SuperRecyclerAdapter<T> extends RecyclerView.Adapter<Super
     }
 
     @Override
-    public SuperViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         View view = LayoutInflater.from(mContext).inflate(getLayoutId(viewType), parent, false);
-        return new SuperViewHolder(view);
+        return new BaseViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final SuperViewHolder holder, final int position) {
+    public void onBindViewHolder(final BaseViewHolder holder, final int position) {
         onBindViewHolder(holder, position, mItems.get(position));
 
         if (mItemClickListener != null) {
@@ -60,7 +60,7 @@ public abstract class SuperRecyclerAdapter<T> extends RecyclerView.Adapter<Super
 
     abstract protected int getLayoutId(int viewType);
 
-    abstract protected void onBindViewHolder(SuperViewHolder holder, int position, T item);
+    abstract protected void onBindViewHolder(BaseViewHolder holder, int position, T item);
 
     public void add(int position, T item) {
         mItems.add(position, item);

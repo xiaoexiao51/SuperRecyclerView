@@ -1,8 +1,8 @@
 package com.superrecyclerview.adapter;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.base.SuperRecyclerAdapter;
-import com.superrecyclerview.base.SuperViewHolder;
+import com.superrecyclerview.base.BaseRecyclerAdapter;
+import com.superrecyclerview.base.BaseViewHolder;
 import com.superrecyclerview.bean.VideoBean;
 import com.superrecyclerview.utils.GlideUtils;
 
@@ -15,7 +15,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by MMM on 2017/8/8.
  */
 
-public class VideoPlayerAdapter extends SuperRecyclerAdapter<VideoBean> {
+public class VideoPlayerAdapter extends BaseRecyclerAdapter<VideoBean> {
 
     public VideoPlayerAdapter(List<VideoBean> items) {
         super(items);
@@ -27,7 +27,7 @@ public class VideoPlayerAdapter extends SuperRecyclerAdapter<VideoBean> {
     }
 
     @Override
-    protected void onBindViewHolder(SuperViewHolder holder, int position, VideoBean item) {
+    protected void onBindViewHolder(BaseViewHolder holder, int position, VideoBean item) {
 
         ((JCVideoPlayerStandard) holder.getView(R.id.video_player)).setUp(item.getVideoUrl(),
                 JCVideoPlayer.SCREEN_LAYOUT_LIST, "小视频00" + (position + 1));

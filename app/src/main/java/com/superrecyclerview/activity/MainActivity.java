@@ -28,7 +28,7 @@ import com.orhanobut.logger.Logger;
 import com.superrecyclerview.R;
 import com.superrecyclerview.adapter.NewsMainAdapter;
 import com.superrecyclerview.base.BaseActivity;
-import com.superrecyclerview.base.SuperRecyclerAdapter;
+import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.bean.NewsBean;
 import com.superrecyclerview.decoration.SpaceDecoration;
 import com.superrecyclerview.interfaces.OnLoadMoreListener;
@@ -231,7 +231,7 @@ public class MainActivity extends BaseActivity {
         mRecyclerView.setLoadMoreEnabled(true);
         mRecyclerView.refreshWithPull();
 
-        mAdapter.setOnItemClickListener(new SuperRecyclerAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 if (CommonUtils.isFastDoubleClick()) {
@@ -247,7 +247,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        mAdapter.setOnLongClickListener(new SuperRecyclerAdapter.OnItemLongClickListener() {
+        mAdapter.setOnLongClickListener(new BaseRecyclerAdapter.OnItemLongClickListener() {
             @Override
             public void onLongClick(View itemView, int position) {
                 mAdapter.delete(position);

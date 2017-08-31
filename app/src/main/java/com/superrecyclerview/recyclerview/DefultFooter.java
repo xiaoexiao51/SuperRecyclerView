@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.superrecyclerview.R;
 import com.superrecyclerview.interfaces.ILoadMoreFooter;
 
-public class LFooter extends LinearLayout implements ILoadMoreFooter {
+public class DefultFooter extends LinearLayout implements ILoadMoreFooter {
 
     private String loadingHint = "正在加载...";
     private String noMoreHint = "已加载全部";
@@ -30,17 +30,17 @@ public class LFooter extends LinearLayout implements ILoadMoreFooter {
     private TextView mNoNetWorkText;
 
 
-    public LFooter(Context context) {
+    public DefultFooter(Context context) {
         super(context);
         init(context);
     }
 
-    public LFooter(Context context, AttributeSet attrs) {
+    public DefultFooter(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public LFooter(Context context, AttributeSet attrs, int defStyleAttr) {
+    public DefultFooter(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }

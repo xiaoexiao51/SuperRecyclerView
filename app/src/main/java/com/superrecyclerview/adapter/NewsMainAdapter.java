@@ -3,8 +3,8 @@ package com.superrecyclerview.adapter;
 import android.widget.ImageView;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.base.SuperRecyclerAdapter;
-import com.superrecyclerview.base.SuperViewHolder;
+import com.superrecyclerview.base.BaseRecyclerAdapter;
+import com.superrecyclerview.base.BaseViewHolder;
 import com.superrecyclerview.bean.NewsBean;
 import com.superrecyclerview.utils.GlideUtils;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * Created by MMM on 2017/8/8.
  */
 
-public class NewsMainAdapter extends SuperRecyclerAdapter<NewsBean.T1348648517839Bean> {
+public class NewsMainAdapter extends BaseRecyclerAdapter<NewsBean.T1348648517839Bean> {
 
     public NewsMainAdapter(List<NewsBean.T1348648517839Bean> items) {
         super(items);
@@ -26,7 +26,7 @@ public class NewsMainAdapter extends SuperRecyclerAdapter<NewsBean.T134864851783
     }
 
     @Override
-    protected void onBindViewHolder(SuperViewHolder holder, int position, NewsBean.T1348648517839Bean item) {
+    protected void onBindViewHolder(BaseViewHolder holder, int position, NewsBean.T1348648517839Bean item) {
         //绑定图片
         ImageView iv_cover = holder.getImageView(R.id.iv_cover);
 //        GlideHelper.getInstance().injectImageWithNull(iv_cover, item.getImgsrc());

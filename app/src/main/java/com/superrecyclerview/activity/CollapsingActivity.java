@@ -25,7 +25,7 @@ import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
 import com.superrecyclerview.interfaces.OnRefreshListener;
 import com.superrecyclerview.recyclerview.LRecyclerView;
 import com.superrecyclerview.recyclerview.LRecyclerViewAdapter;
-import com.superrecyclerview.base.SuperRecyclerAdapter;
+import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.utils.CommonUtils;
 import com.superrecyclerview.utils.DensityUtil;
 import com.superrecyclerview.utils.MessageUtils;
@@ -242,7 +242,7 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
             }
         }).start();
 
-        mAdapter.setOnItemClickListener(new SuperRecyclerAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
 
             @Override
             public void onItemClick(View itemView, int position) {
@@ -254,7 +254,7 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
             }
         });
 
-        mAdapter.setOnLongClickListener(new SuperRecyclerAdapter.OnItemLongClickListener() {
+        mAdapter.setOnLongClickListener(new BaseRecyclerAdapter.OnItemLongClickListener() {
             @Override
             public void onLongClick(View itemView, int position) {
                 mAdapter.delete(position);

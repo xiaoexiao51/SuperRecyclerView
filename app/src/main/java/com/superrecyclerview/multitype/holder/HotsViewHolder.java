@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.base.SuperRecyclerAdapter;
+import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.multitype.adapter.HotsAdapter;
 import com.superrecyclerview.multitype.type.HotList;
 import com.superrecyclerview.multitype.type.Visitable;
@@ -39,13 +39,13 @@ public class HotsViewHolder extends BetterViewHolder {
         final HotList hotList = (HotList) visitable;
         final HotsAdapter adapter = new HotsAdapter(hotList.products);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new SuperRecyclerAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 MessageUtils.showInfo(mContext, hotList.products.get(position).title);
             }
         });
-        adapter.setOnLongClickListener(new SuperRecyclerAdapter.OnItemLongClickListener() {
+        adapter.setOnLongClickListener(new BaseRecyclerAdapter.OnItemLongClickListener() {
             @Override
             public void onLongClick(View itemView, int position) {
                 adapter.delete(position);

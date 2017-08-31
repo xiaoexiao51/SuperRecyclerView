@@ -22,11 +22,11 @@ import android.widget.TextView;
  * Created by MMM on 2016/8/8.
  * RecyclerView通用适配器Holder
  */
-public class SuperViewHolder extends RecyclerView.ViewHolder {
+public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     private SparseArray<View> mViews;
 
-    public SuperViewHolder(View itemView) {
+    public BaseViewHolder(View itemView) {
         super(itemView);
         mViews = new SparseArray<View>();
     }
@@ -70,84 +70,84 @@ public class SuperViewHolder extends RecyclerView.ViewHolder {
     /**
      * 设置TextView的值
      */
-    public SuperViewHolder setText(int viewId, String text) {
+    public BaseViewHolder setText(int viewId, String text) {
         TextView tv = findViewById(viewId);
         tv.setText(text);
         return this;
     }
 
-    public SuperViewHolder setText(int viewId, CharSequence text) {
+    public BaseViewHolder setText(int viewId, CharSequence text) {
         TextView tv = findViewById(viewId);
         tv.setText(text);
         return this;
     }
 
-    public SuperViewHolder setImageResource(int viewId, int resId) {
+    public BaseViewHolder setImageResource(int viewId, int resId) {
         ImageView view = findViewById(viewId);
         view.setImageResource(resId);
         return this;
     }
 
-    public SuperViewHolder setImageBitmap(int viewId, Bitmap bitmap) {
+    public BaseViewHolder setImageBitmap(int viewId, Bitmap bitmap) {
         ImageView view = findViewById(viewId);
         view.setImageBitmap(bitmap);
         return this;
     }
 
-    public SuperViewHolder setImageDrawable(int viewId, Drawable drawable) {
+    public BaseViewHolder setImageDrawable(int viewId, Drawable drawable) {
         ImageView view = findViewById(viewId);
         view.setImageDrawable(drawable);
         return this;
     }
 
-    public SuperViewHolder setBackgroundColor(int viewId, int color) {
+    public BaseViewHolder setBackgroundColor(int viewId, int color) {
         View view = findViewById(viewId);
         view.setBackgroundColor(color);
         return this;
     }
 
-    public SuperViewHolder setBackgroundRes(int viewId, int backgroundRes) {
+    public BaseViewHolder setBackgroundRes(int viewId, int backgroundRes) {
         View view = findViewById(viewId);
         view.setBackgroundResource(backgroundRes);
         return this;
     }
 
-    public SuperViewHolder setTextColor(int viewId, int textColor) {
+    public BaseViewHolder setTextColor(int viewId, int textColor) {
         TextView view = findViewById(viewId);
         view.setTextColor(textColor);
         return this;
     }
 
-//    public SuperViewHolder setTextColorRes(int viewId, int textColorRes) {
+//    public BaseViewHolder setTextColorRes(int viewId, int textColorRes) {
 //        TextView view = findViewById(viewId);
 //        view.setTextColor(ContextCompat.getColor(mContext, textColorRes));
 //        return this;
 //    }
 
-    public SuperViewHolder setAlpha(int viewId, float value) {
+    public BaseViewHolder setAlpha(int viewId, float value) {
         ViewCompat.setAlpha(findViewById(viewId), value);
         return this;
     }
 
-    public SuperViewHolder setViewGone(int viewId, boolean gone) {
+    public BaseViewHolder setViewGone(int viewId, boolean gone) {
         View view = findViewById(viewId);
         view.setVisibility(gone ? View.GONE : View.VISIBLE);
         return this;
     }
 
-    public SuperViewHolder setViewInvisible(int viewId, boolean invisible) {
+    public BaseViewHolder setViewInvisible(int viewId, boolean invisible) {
         View view = findViewById(viewId);
         view.setVisibility(invisible ? View.INVISIBLE : View.VISIBLE);
         return this;
     }
 
-    public SuperViewHolder linkify(int viewId) {
+    public BaseViewHolder linkify(int viewId) {
         TextView view = findViewById(viewId);
         Linkify.addLinks(view, Linkify.ALL);
         return this;
     }
 
-    public SuperViewHolder setTypeface(Typeface typeface, int... viewIds) {
+    public BaseViewHolder setTypeface(Typeface typeface, int... viewIds) {
         for (int viewId : viewIds) {
             TextView view = findViewById(viewId);
             view.setTypeface(typeface);
@@ -156,51 +156,51 @@ public class SuperViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public SuperViewHolder setProgress(int viewId, int progress) {
+    public BaseViewHolder setProgress(int viewId, int progress) {
         ProgressBar view = findViewById(viewId);
         view.setProgress(progress);
         return this;
     }
 
-    public SuperViewHolder setProgress(int viewId, int progress, int max) {
+    public BaseViewHolder setProgress(int viewId, int progress, int max) {
         ProgressBar view = findViewById(viewId);
         view.setMax(max);
         view.setProgress(progress);
         return this;
     }
 
-    public SuperViewHolder setMax(int viewId, int max) {
+    public BaseViewHolder setMax(int viewId, int max) {
         ProgressBar view = findViewById(viewId);
         view.setMax(max);
         return this;
     }
 
-    public SuperViewHolder setRating(int viewId, float rating) {
+    public BaseViewHolder setRating(int viewId, float rating) {
         RatingBar view = findViewById(viewId);
         view.setRating(rating);
         return this;
     }
 
-    public SuperViewHolder setRating(int viewId, float rating, int max) {
+    public BaseViewHolder setRating(int viewId, float rating, int max) {
         RatingBar view = findViewById(viewId);
         view.setMax(max);
         view.setRating(rating);
         return this;
     }
 
-    public SuperViewHolder setTag(int viewId, Object tag) {
+    public BaseViewHolder setTag(int viewId, Object tag) {
         View view = findViewById(viewId);
         view.setTag(tag);
         return this;
     }
 
-    public SuperViewHolder setTag(int viewId, int key, Object tag) {
+    public BaseViewHolder setTag(int viewId, int key, Object tag) {
         View view = findViewById(viewId);
         view.setTag(key, tag);
         return this;
     }
 
-    public SuperViewHolder setChecked(int viewId, boolean checked) {
+    public BaseViewHolder setChecked(int viewId, boolean checked) {
         Checkable view = (Checkable) findViewById(viewId);
         view.setChecked(checked);
         return this;
@@ -209,19 +209,19 @@ public class SuperViewHolder extends RecyclerView.ViewHolder {
     /**
      * 关于事件的
      */
-    public SuperViewHolder setOnClickListener(int viewId, View.OnClickListener listener) {
+    public BaseViewHolder setOnClickListener(int viewId, View.OnClickListener listener) {
         View view = findViewById(viewId);
         view.setOnClickListener(listener);
         return this;
     }
 
-    public SuperViewHolder setOnTouchListener(int viewId, View.OnTouchListener listener) {
+    public BaseViewHolder setOnTouchListener(int viewId, View.OnTouchListener listener) {
         View view = findViewById(viewId);
         view.setOnTouchListener(listener);
         return this;
     }
 
-    public SuperViewHolder setOnLongClickListener(int viewId, View.OnLongClickListener listener) {
+    public BaseViewHolder setOnLongClickListener(int viewId, View.OnLongClickListener listener) {
         View view = findViewById(viewId);
         view.setOnLongClickListener(listener);
         return this;

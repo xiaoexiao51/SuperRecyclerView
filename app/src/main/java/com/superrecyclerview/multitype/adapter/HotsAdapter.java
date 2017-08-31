@@ -3,14 +3,14 @@ package com.superrecyclerview.multitype.adapter;
 import android.widget.LinearLayout;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.base.SuperRecyclerAdapter;
-import com.superrecyclerview.base.SuperViewHolder;
+import com.superrecyclerview.base.BaseRecyclerAdapter;
+import com.superrecyclerview.base.BaseViewHolder;
 import com.superrecyclerview.bean.ProductBean;
 import com.superrecyclerview.utils.CommonUtils;
 
 import java.util.List;
 
-public class HotsAdapter extends SuperRecyclerAdapter<ProductBean> {
+public class HotsAdapter extends BaseRecyclerAdapter<ProductBean> {
 
     public HotsAdapter(List<ProductBean> items) {
         super(items);
@@ -22,7 +22,7 @@ public class HotsAdapter extends SuperRecyclerAdapter<ProductBean> {
     }
 
     @Override
-    protected void onBindViewHolder(SuperViewHolder holder, int position, ProductBean item) {
+    protected void onBindViewHolder(BaseViewHolder holder, int position, ProductBean item) {
         //绑定封面
         holder.getImageView(R.id.iv_cover).setImageResource(item.coverres);
         //绑定标题
