@@ -1,0 +1,15 @@
+<resources>
+
+  <!--  <style name="AppTheme" parent="@style/AppBaseTheme">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+     <style name="SwipeBackTheme" parent="@style/AppBaseTheme">
+         <item name="android:windowIsTranslucent">true</item>
+         &lt;!&ndash; <item name="android:windowBackground">@android:color/transparent</item>&ndash;&gt;
+         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+         <item name="android:statusBarColor">@android:color/transparent</item>
+     </style>-->
+
+</resources>

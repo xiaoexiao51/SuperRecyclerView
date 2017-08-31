@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">冒泡</string>
+
+    <string name="is_loading">加载中，请稍后...</string>
+    <string name="no_login">登录账号，查看更多内容</string>
+    <string name="no_network">网络不通畅</string>
+    <string name="no_value">No value for result</string>
+
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--状态布局相关-->
+    <declare-styleable name="stateLayout_state">
+        <attr name="state_loading" format="integer"/>
+        <attr name="state_error" format="integer"/>
+        <attr name="state_empty" format="integer"/>
+        <attr name="state_login" format="integer"/>
+        <attr name="state_succes" format="integer"/>
+    </declare-styleable>
+
+    <integer name="state_loading_value">0</integer>
+    <integer name="state_error_value">1</integer>
+    <integer name="state_empty_value">2</integer>
+    <integer name="state_login_value">3</integer>
+    <integer name="state_succes_value">4</integer>
+
+    <declare-styleable name="stateLayout_state_success">
+        <attr name="stateLayout_state_success_layout" format="reference"/>
+    </declare-styleable>
+
+    <!--显示刷新提示-->
+    <declare-styleable name="TipView">
+        <attr name="tipBackColor" format="color"/>
+        <attr name="tipTextColor" format="color"/>
+        <attr name="tipText" format="string"/>
+        <attr name="tipTextSize" format="dimension"/>
+    </declare-styleable>
+
+</resources>

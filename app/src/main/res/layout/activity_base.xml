@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <!--<include
+        android:id="@+id/toolbar"
+        layout="@layout/common_toolbar"/>-->
+
+    <com.superrecyclerview.widget.StateLayout
+        android:id="@+id/state_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        app:state_empty="@integer/state_empty_value"
+        app:state_error="@integer/state_error_value"
+        app:state_loading="@integer/state_loading_value"
+        app:state_login="@integer/state_login_value"/>
+
+    <TextView
+        android:id="@+id/tv_network"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_pick"
+        android:drawableLeft="@drawable/ic_error"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:text="网络不给力，请检查网络设置。"/>
+
+</RelativeLayout>

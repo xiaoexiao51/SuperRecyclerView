@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 使用动画集合 需要把shareInterpolator设置为false 否则插入器失效 -->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:shareInterpolator="false">
+    <scale
+        android:duration="200"
+        android:fillAfter="false"
+        android:fromXScale="1.0"
+        android:fromYScale="1.0"
+        android:pivotX="95%"
+        android:pivotY="0%"
+        android:toXScale="0.0"
+        android:toYScale="0.0">
+    </scale>
+</set>
+
+    <!-- <scale
+         android:duration="700"
+
+         android:fillAfter="false"
+         android:fromXScale="0.0"
+
+         android:fromYScale="0.0"
+         android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+
+         android:pivotX="50%"
+         android:pivotY="50%"
+
+         android:toXScale="1.0"
+         android:toYScale="1.0"/>-->
+
+    <!--    <alpha
+            android:fromAlpha="0.0"
+            android:toAlpha="1.0"/>
+
+        <scale
+            android:fromXScale="0.0"
+            android:fromYScale="0.0"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toXScale="1.4"
+            android:toYScale="1.4"/>
+
+        <rotate
+            android:fromDegrees="0"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="720"/>-->

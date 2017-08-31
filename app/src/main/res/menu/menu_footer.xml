@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_client"
+            android:title="MultiType多样式"/>
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@drawable/ic_client"
+            android:title="Expandable"/>
+        <item
+            android:id="@+id/nav_friends"
+            android:icon="@drawable/ic_client"
+            android:title="StickyHeader"/>
+        <item
+            android:id="@+id/nav_discussion"
+            android:icon="@drawable/ic_client"
+            android:title="Parallax视差特效"/>
+    </group>
+
+    <item android:title="更多选项">
+        <menu>
+            <item
+                android:id="@+id/sub_setting"
+                android:icon="@drawable/ic_client"
+                android:title="设置"/>
+            <item
+                android:id="@+id/sub_about"
+                android:icon="@drawable/ic_client"
+                android:title="关于"/>
+        </menu>
+    </item>
+
+</menu>

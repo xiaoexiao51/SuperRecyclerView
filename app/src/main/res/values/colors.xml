@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFCD03</color>
+    <color name="colorPrimaryDark">#A18206</color>
+    <color name="colorAccent">#FFCD03</color>
+    <color name="white">#ffffff</color>
+
+    <!--灰色背景或分隔线-->
+    <color name="color_bg">#EBEBEB</color>
+    <color name="color_bg2">#F4F4F4</color>
+    <color name="color_line">#EEEFF3</color>
+    <color name="deep_line">#DDDDDD</color>
+    <color name="gray_bg">#EEEFF3</color>
+    <color name="color_img_bg">#D8D8D8</color>
+    <color name="color_press">#D8D8D8</color>
+
+    <!--文字颜色由深到浅-->
+    <color name="color_title">#333333</color>
+    <color name="color_content">#5c5c5c</color>
+    <color name="color_gray">#7B7B7B</color>
+    <color name="light_gray">#B1B2B2</color>
+    <color name="color_refresh">#777777</color>
+
+    <!--透明色-->
+    <color name="transparent">#00000000</color>
+    <color name="transparent_black">#88000000</color>
+    <color name="transparent_gray">#885c5c5c</color>
+    <color name="color_blue">#0099FF</color>
+    <color name="dark_blue">#00558E</color>
+    <color name="trans_blue">#8800558E</color>
+
+    <color name="bright_red">#ffdc001e</color>
+    <color name="color_red">#e10403</color>
+    <color name="dark_red">#8c0706</color>
+    <color name="transparent_red">#88FF0000</color>
+    <color name="color_pick">#FCBCB8</color>
+    <color name="color_ripple">#607D8B</color>
+
+</resources>

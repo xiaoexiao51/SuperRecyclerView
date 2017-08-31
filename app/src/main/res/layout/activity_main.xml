@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorPrimary"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <!--
+               scroll(0x00000001):要和滚动联动都要设置这个标志;
+               enterAlways(0x00000004):跟随滚动视图的上下滚动;
+               enterAlwaysCollapsed(0x00000008):当滚动视图滚动到底时，View只能以minHeight的高度滚入界面;
+               exitUntilCollapsed(0x00000002):跟随滚动视图的上下滚动,但滚出时会预留minHeight的高度，实际能滚动的距离为(layout_height-minHeight);
+               snap(0x00000010):根据滚动释放时的状态来自动执行完整的enter或者exit动画;
+               -->
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:drawableLeft="@drawable/ic_location"
+                    android:drawablePadding="10dp"
+                    android:text="杭州"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:id="@+id/tv_apptitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Toolbar"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"/>
+
+            </android.support.v7.widget.Toolbar>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                app:tabBackground="@drawable/ripple_item"
+                app:tabIndicatorColor="@color/white"
+                app:tabIndicatorHeight="3dp"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <!-- 程序主体内容显示区域 -->
+        <com.superrecyclerview.recyclerview.LRecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:splitMotionEvents="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <include
+            android:id="@+id/empty_view"
+            layout="@layout/layout_empty"
+            android:visibility="gone"/>
+
+        <!--显示提示-->
+        <com.superrecyclerview.widget.TipView
+            android:id="@+id/tv_tipview"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="88dp"
+            android:visibility="gone"
+            app:tipBackColor="@color/color_pick"
+            app:tipText="正在刷新"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_upward"/>
+
+        <!--  <android.support.design.widget.FloatingActionButton
+              android:id="@+id/fab"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="end|bottom"
+              android:layout_margin="16dp"
+              android:src="@android:drawable/ic_menu_share"
+              app:backgroundTint="@color/colorAccent"
+              app:borderWidth="0dp"
+              app:elevation="6dp"
+              app:fabSize="normal"
+              app:layout_anchor="@id/recycler_view"
+              app:layout_anchorGravity="bottom|right"
+              app:pressedTranslationZ="12dp"
+              app:rippleColor="@color/colorPrimaryDark"/>-->
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/menu_header"
+        app:menu="@menu/menu_footer"/>
+
+</android.support.v4.widget.DrawerLayout>
