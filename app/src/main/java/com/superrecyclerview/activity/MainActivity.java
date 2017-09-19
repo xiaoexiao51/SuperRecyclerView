@@ -415,16 +415,21 @@ public class MainActivity extends BaseActivity {
         overridePendingTransition(R.anim.hold, R.anim.zoom_out_exit);//放大消失
     }
 
+    private double exitTime;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (CommonUtils.isFastDoubleClick()) {
+            if ((System.currentTimeMillis() - exitTime) < 2000) {
                 finish();
+                System.exit(0);
             } else {
                 MessageUtils.showInfo(mContext, "再按一次退出程序");
+                exitTime = System.currentTimeMillis();
             }
+            return true;
         }
-        return false;
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

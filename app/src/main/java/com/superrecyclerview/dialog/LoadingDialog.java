@@ -45,7 +45,7 @@ public class LoadingDialog extends Dialog {
 //        dialogWindow.setGravity(Gravity.CENTER | Gravity.BOTTOM);
         WindowManager.LayoutParams params = dialogWindow.getAttributes();
         DisplayMetrics d = context.getResources().getDisplayMetrics(); // 获取屏幕宽高
-        params.width = (int) (d.widthPixels * 1.0); // 高度设置为屏幕的0.8
+        params.width = (int) (d.widthPixels * 1.0); // 高度设置为屏幕的1.0
 //        params.height = (int) (d.heightPixels * 0.6); // 高度设置为屏幕的0.6
         dialogWindow.setAttributes(params);
 
