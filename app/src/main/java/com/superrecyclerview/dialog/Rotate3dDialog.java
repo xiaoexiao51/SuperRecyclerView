@@ -1,9 +1,9 @@
-package com.superrecyclerview.rotate3d;
+package com.superrecyclerview.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -35,8 +35,7 @@ public class Rotate3dDialog extends Dialog {
     @Bind(R.id.ll_retrieve)
     LinearLayout llRetrieve;//反面视图
 
-    private Context context;
-    private View view;
+    private Context mContext;
 
     private int centerX;
     private int centerY;
@@ -48,33 +47,29 @@ public class Rotate3dDialog extends Dialog {
     private boolean isOpen = false;
 
     public Rotate3dDialog(Context context) {
-        super(context);
-        this.context = context;
+        this(context, 0);
+        this.mContext = context;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //去掉系统的黑色矩形边框
-        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+    public Rotate3dDialog(Context context, int themeResId) {
+        super(context, R.style.AlertDialogStyle);
+        this.mContext = context;
 
-        init();
-    }
-
-    public void init() {
-        view = LayoutInflater.from(context).inflate(R.layout.dialog_rotate3d, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_rotate3d, null);
         setContentView(view);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this, view);
 
         Window dialogWindow = getWindow();
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        dialogWindow.setGravity(Gravity.CENTER);
+//        dialogWindow.setGravity(Gravity.CENTER | Gravity.BOTTOM);
+        WindowManager.LayoutParams params = dialogWindow.getAttributes();
         DisplayMetrics d = context.getResources().getDisplayMetrics(); // 获取屏幕宽高
-        lp.width = (int) (d.widthPixels * 0.8); // 高度设置为屏幕的0.6
-        lp.height = (int) (d.heightPixels * 0.6); // 高度设置为屏幕的0.6
-        dialogWindow.setAttributes(lp);
-        setCanceledOnTouchOutside(false);
-        setCancelable(true);
+        params.width = (int) (d.widthPixels * 0.8); // 高度设置为屏幕的0.8
+        params.height = (int) (d.heightPixels * 0.6); // 高度设置为屏幕的0.6
+        dialogWindow.setAttributes(params);
+
+        Rotate3dDialog.this.setCanceledOnTouchOutside(false);
+        Rotate3dDialog.this.setCancelable(true);
     }
 
     @OnClick({R.id.tv_forget_pwd, R.id.btn_back})

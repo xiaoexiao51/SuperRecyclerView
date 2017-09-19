@@ -36,7 +36,7 @@ import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
 import com.superrecyclerview.interfaces.OnRefreshListener;
 import com.superrecyclerview.recyclerview.LRecyclerView;
 import com.superrecyclerview.recyclerview.LRecyclerViewAdapter;
-import com.superrecyclerview.rotate3d.Rotate3dDialog;
+import com.superrecyclerview.dialog.Rotate3dDialog;
 import com.superrecyclerview.utils.ActivityUtils;
 import com.superrecyclerview.utils.CommonUtils;
 import com.superrecyclerview.utils.DensityUtil;

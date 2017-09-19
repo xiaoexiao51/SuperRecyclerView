@@ -1,4 +1,4 @@
-package com.superrecyclerview.rotate3d;
+package com.superrecyclerview.dialog;
 
 import android.graphics.Camera;
 import android.graphics.Matrix;

@@ -4,7 +4,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_dialog_bg"
+    android:background="@drawable/shap_dialog_rotate3d_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -88,7 +88,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/shap_button_login"
             android:text="Login"
-            android:textColor="@color/white"
+            android:textColor="@color/color_white"
             android:textSize="13sp"/>
 
         <Button
@@ -147,7 +147,7 @@
             android:background="@drawable/shap_button_login"
             android:minHeight="0dp"
             android:text="Send"
-            android:textColor="@color/white"
+            android:textColor="@color/color_white"
             android:textSize="13sp"/>
 
         <Button
@@ -161,7 +161,7 @@
             android:background="@drawable/shap_button_login"
             android:minHeight="0dp"
             android:text="Back"
-            android:textColor="@color/white"
+            android:textColor="@color/color_white"
             android:textSize="13sp"/>
 
         <TextView

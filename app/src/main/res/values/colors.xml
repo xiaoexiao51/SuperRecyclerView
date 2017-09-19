@@ -3,7 +3,8 @@
     <color name="colorPrimary">#FFCD03</color>
     <color name="colorPrimaryDark">#A18206</color>
     <color name="colorAccent">#FFCD03</color>
-    <color name="white">#ffffff</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_black">#000000</color>
 
     <!--灰色背景或分隔线-->
     <color name="color_bg">#EBEBEB</color>
