@@ -43,8 +43,8 @@ import com.superrecyclerview.utils.DensityUtil;
 import com.superrecyclerview.utils.GlideUtils;
 import com.superrecyclerview.utils.MessageUtils;
 import com.superrecyclerview.utils.ScreenUtils;
-import com.superrecyclerview.widget.TipView;
-import com.superrecyclerview.widget.XPopWindow;
+import com.superrecyclerview.widget.SRPopWindow;
+import com.superrecyclerview.widget.SRTipView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity {
     DrawerLayout mDrawerLayout;
 
     @Bind(R.id.tv_tipview)
-    TipView mTipView;
+    SRTipView mTipView;
     @Bind(R.id.empty_view)
     LinearLayout mEmptyView;
     private Banner mBannerView;
@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity {
 
     List<String> images = new ArrayList<>();
     List<String> titles = new ArrayList<>();
-    private XPopWindow mPopWindow;
+    private SRPopWindow mPopWindow;
 
     @Override
     protected int getViewId() {
@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void init(View view) {
+    protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
         initToolbar();
         initListener();//必须先调用监听，才能自动刷新
@@ -383,10 +383,10 @@ public class MainActivity extends BaseActivity {
                 items.add("扫一扫");
                 items.add("收付款");
                 items.add("帮助与反馈");
-                mPopWindow = new XPopWindow(mContext, items);
+                mPopWindow = new SRPopWindow(mContext, items);
                 mPopWindow.setPopWidth(CommonUtils.dip2px(mContext, 160));
                 mPopWindow.showPopupWindow(mToolbar, ScreenUtils.getScreenWidth(mContext), 0);
-                mPopWindow.setOnItemListener(new XPopWindow.OnItemListener() {
+                mPopWindow.setOnItemListener(new SRPopWindow.OnItemListener() {
                     @Override
                     public void OnItemListener(int position, String item) {
                         MessageUtils.showInfo(mContext, item);

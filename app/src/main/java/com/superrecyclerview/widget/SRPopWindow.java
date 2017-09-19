@@ -24,7 +24,7 @@ import java.util.List;
  * Context传进来的上下文最好是Activity，才会有阴影效果。
  */
 
-public class XPopWindow extends PopupWindow {
+public class SRPopWindow extends PopupWindow {
 
     private List<String> items;
     private View conentView;
@@ -32,20 +32,20 @@ public class XPopWindow extends PopupWindow {
     private ListView listView;
     int[] location = new int[2];
 
-//    private static XPopWindow sXPopWindow;
+//    private static SRPopWindow sXPopWindow;
 //
-//    public static XPopWindow getInstance(Context context, List<String> items) {
+//    public static SRPopWindow getInstance(Context context, List<String> items) {
 //        if (sXPopWindow == null) {
-//            synchronized (XPopWindow.class) {
+//            synchronized (SRPopWindow.class) {
 //                if (sXPopWindow == null) {
-//                    sXPopWindow = new XPopWindow(context.getApplicationContext(), items);
+//                    sXPopWindow = new SRPopWindow(context.getApplicationContext(), items);
 //                }
 //            }
 //        }
 //        return sXPopWindow;
 //    }
 
-    public XPopWindow(Context context, List<String> items) {
+    public SRPopWindow(Context context, List<String> items) {
         this.context = context;
         this.items = items;
         initView();

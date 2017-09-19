@@ -80,7 +80,7 @@
             android:visibility="gone"/>
 
         <!--显示提示-->
-        <com.superrecyclerview.widget.TipView
+        <com.superrecyclerview.widget.SRTipView
             android:id="@+id/tv_tipview"
             android:layout_width="match_parent"
             android:layout_height="30dp"

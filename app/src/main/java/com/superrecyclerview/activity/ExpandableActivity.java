@@ -3,6 +3,7 @@ package com.superrecyclerview.activity;
 
 import android.animation.Animator;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,7 +65,7 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
     }
 
     @Override
-    protected void init(View view) {
+    protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
         //获取数据
         initBooks();

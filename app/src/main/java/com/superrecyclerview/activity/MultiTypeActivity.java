@@ -1,6 +1,7 @@
 package com.superrecyclerview.activity;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -70,7 +71,7 @@ public class MultiTypeActivity extends BaseActivity {
     }
 
     @Override
-    protected void init(View view) {
+    protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
         initToolbar();
         initRecyclerView();

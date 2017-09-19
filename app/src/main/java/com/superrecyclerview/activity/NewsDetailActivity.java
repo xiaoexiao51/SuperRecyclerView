@@ -2,6 +2,7 @@ package com.superrecyclerview.activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -53,7 +54,7 @@ public class NewsDetailActivity extends BaseSwipeBackActivity {
     }
 
     @Override
-    protected void init(View view) {
+    protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
         //图片模糊处理
 //        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_mztu);

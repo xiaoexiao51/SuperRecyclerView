@@ -21,7 +21,7 @@
     </declare-styleable>
 
     <!--显示刷新提示-->
-    <declare-styleable name="TipView">
+    <declare-styleable name="SRTipView">
         <attr name="tipBackColor" format="color"/>
         <attr name="tipTextColor" format="color"/>
         <attr name="tipText" format="string"/>

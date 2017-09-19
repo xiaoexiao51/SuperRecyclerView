@@ -23,7 +23,7 @@ import com.superrecyclerview.utils.CommonUtils;
  * 顶部提示
  */
 
-public class TipView extends LinearLayout {
+public class SRTipView extends LinearLayout {
 
     private Context mContext;
 
@@ -38,22 +38,22 @@ public class TipView extends LinearLayout {
     private boolean isShowing;
     private Handler mHandler = new Handler();
 
-    public TipView(Context context) {
+    public SRTipView(Context context) {
         this(context, null);
     }
 
-    public TipView(Context context, @Nullable AttributeSet attrs) {
+    public SRTipView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TipView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SRTipView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TipView);
-        mBackColor = ta.getColor(R.styleable.TipView_tipBackColor, Color.parseColor("#ffffff"));
-        mTextColor = ta.getColor(R.styleable.TipView_tipTextColor, Color.parseColor("#666666"));
-        mText = ta.getString(R.styleable.TipView_tipText);
-        mTextSize = ta.getDimensionPixelSize(R.styleable.TipView_tipTextSize, CommonUtils.sp2px(context, 13));
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SRTipView);
+        mBackColor = ta.getColor(R.styleable.SRTipView_tipBackColor, Color.parseColor("#ffffff"));
+        mTextColor = ta.getColor(R.styleable.SRTipView_tipTextColor, Color.parseColor("#666666"));
+        mText = ta.getString(R.styleable.SRTipView_tipText);
+        mTextSize = ta.getDimensionPixelSize(R.styleable.SRTipView_tipTextSize, CommonUtils.sp2px(context, 13));
         ta.recycle();
 
         init();

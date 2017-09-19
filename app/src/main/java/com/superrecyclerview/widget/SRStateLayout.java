@@ -25,7 +25,7 @@ import java.lang.annotation.RetentionPolicy;
  * 加载成功 ----->  自定义：网络请求数据填充之后的
  */
 
-public class StateLayout extends FrameLayout {
+public class SRStateLayout extends FrameLayout {
 
     public static final int STATE_LOADING = 0;
     public static final int STATE_ERROR = 1;
@@ -39,15 +39,15 @@ public class StateLayout extends FrameLayout {
     public @interface StateEnum {
     }
 
-    public StateLayout(Context context) {
+    public SRStateLayout(Context context) {
         this(context, null);
     }
 
-    public StateLayout(Context context, AttributeSet attrs) {
+    public SRStateLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public StateLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SRStateLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         TypedArray typedstateLayout_stateArray = context.obtainStyledAttributes(attrs, R.styleable.stateLayout_state);

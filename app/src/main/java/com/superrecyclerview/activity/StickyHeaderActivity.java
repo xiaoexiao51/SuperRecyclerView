@@ -1,8 +1,8 @@
 package com.superrecyclerview.activity;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.superrecyclerview.R;
 import com.superrecyclerview.adapter.SuperTestAdapter;
@@ -64,7 +64,7 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
     }
 
     @Override
-    protected void init(View view) {
+    protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
         initLRecyclerView();
     }
