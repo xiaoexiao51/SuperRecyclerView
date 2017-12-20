@@ -8,8 +8,8 @@ import com.superrecyclerview.utils.GlideUtils;
 
 import java.util.List;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by MMM on 2017/8/8.
@@ -29,10 +29,10 @@ public class VideoPlayerAdapter extends BaseRecyclerAdapter<VideoBean> {
     @Override
     protected void onBindViewHolder(BaseViewHolder holder, int position, VideoBean item) {
 
-        ((JCVideoPlayerStandard) holder.getView(R.id.video_player)).setUp(item.getVideoUrl(),
-                JCVideoPlayer.SCREEN_LAYOUT_LIST, "小视频00" + (position + 1));
+        ((JZVideoPlayerStandard) holder.getView(R.id.video_player)).setUp(item.getVideoUrl(),
+                JZVideoPlayer.SCREEN_LAYOUT_LIST, "小视频00" + (position + 1));
         GlideUtils.loadWithDefult(mContext, item.getCoverUrl(),
-                ((JCVideoPlayerStandard) holder.getView(R.id.video_player)).thumbImageView);
+                ((JZVideoPlayerStandard) holder.getView(R.id.video_player)).thumbImageView);
 //        holder.jcVideoPlayer.setUp(
 //                VideoConstant.videoUrls[0][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
 //                VideoConstant.videoTitles[0][position]);

@@ -9,7 +9,6 @@ import java.util.List;
  * T 为group数据对象
  * S 为child数据对象
  */
-
 public class GroupItem<T,S> extends BaseItem{
 
     /**head data*/

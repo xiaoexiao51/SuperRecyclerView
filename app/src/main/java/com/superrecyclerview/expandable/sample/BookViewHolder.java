@@ -14,13 +14,13 @@ import com.superrecyclerview.expandable.base.BaseViewHolder;
  */
 public class BookViewHolder extends BaseViewHolder {
 
-    public TextView tvName;
-    public TextView tvTitle;
+    public TextView tvGroup;
+    public TextView tvChild;
 
     public BookViewHolder(Context ctx, View itemView, int viewType) {
         super(ctx, itemView, viewType);
-        tvName = (TextView) itemView.findViewById(R.id.tv_name);
-        tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+        tvGroup = (TextView) itemView.findViewById(R.id.tv_group);
+        tvChild = (TextView) itemView.findViewById(R.id.tv_child);
     }
 
     @Override

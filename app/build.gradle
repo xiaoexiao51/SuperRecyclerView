@@ -77,6 +77,5 @@ dependencies {
     compile 'com.zzhoujay.richtext:richtext:2.0.9'//html富文本
     compile 'com.zzhoujay.glideimagegetter:glideimagegetter:1.0.5'
     compile 'com.afollestad.material-dialogs:core:0.9.4.5'
-
-    compile 'fm.jiecao:jiecaovideoplayer:5.8.1'//节操视频
+    compile 'cn.jzvd:jiaozivideoplayer:6.0.0'//节操视频
 }

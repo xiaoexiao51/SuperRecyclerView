@@ -11,23 +11,23 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.superrecyclerview.R;
 import com.superrecyclerview.base.BaseSwipeBackActivity;
-import com.superrecyclerview.decoration.RecyclerViewDivider;
-import com.superrecyclerview.expandable.base.BaseRecyclerViewAdapter;
+import com.superrecyclerview.decoration.DividerDecoration;
 import com.superrecyclerview.expandable.bean.RecyclerViewData;
 import com.superrecyclerview.expandable.sample.BookAdapter;
-import com.superrecyclerview.expandable.sample.BookBean;
+import com.superrecyclerview.expandable.sample.ContactBean;
 import com.superrecyclerview.utils.AnimHelper;
-import com.superrecyclerview.utils.DensityUtil;
+import com.superrecyclerview.utils.CommonUtils;
+import com.superrecyclerview.utils.StringUtils;
 import com.superrecyclerview.widget.QuickIndexBar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -55,7 +55,7 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
     FrameLayout mFlLove;
 
     private List<RecyclerViewData> mDatas = new ArrayList<>();
-    private BookAdapter mAdapter;
+    private BookAdapter mBookAdapter;
     private LinearLayoutManager mManager;
     private Animator mLoveAnimator;
 
@@ -74,43 +74,73 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
     }
 
     private void initLRecyclerView() {
+        // 1、设置布局管理器
         mManager = new LinearLayoutManager(this);
+//        mManager = new GridLayoutManager(this, 2);
+        // 2、创建数据适配器
+        mBookAdapter = new BookAdapter(this, mDatas);
+//        mManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(int position) {
+//
+//                int itemViewType = mBookAdapter.getItemViewType(position);
+//                if (itemViewType == BaseViewHolder.VIEW_TYPE_PARENT) {
+//                    return 2;// 如果是标题，则占两个单元格
+//                }
+//                return 1;// 如果是内容，则占一个单元格
+//            }
+//        });
         mRecyclerView.setLayoutManager(mManager);
-        mRecyclerView.setNestedScrollingEnabled(false);
-//        mRecyclerView.addItemDecoration(new GroupDecoration(this, DensityUtil.dip2px(this, 10)));
-        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL,
-                DensityUtil.dip2px(this, 10), ContextCompat.getColor(this, R.color.color_bg)));
+        // 3、设置条目分隔线
+//        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setNestedScrollingEnabled(false);
 
-        mAdapter = new BookAdapter(this, mDatas);
-        mRecyclerView.setAdapter(mAdapter);
+//        SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 1));
+//        decoration.setPaddingStart(true);
+//        decoration.setPaddingEdgeSide(true);
+//        decoration.setPaddingHeaderFooter(true);
+//        decoration.isGroupRecyclerView(true);
+//        mRecyclerView.addItemDecoration(decoration);
 
-        mAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
-            @Override
-            public void onGroupItemClick(int position, int groupPosition, View view) {
-                String group = (String) mDatas.get(groupPosition).getGroupData();
-                Toast.makeText(ExpandableActivity.this, "groupPos:" + groupPosition + " group:" + group, Toast.LENGTH_SHORT).show();
-            }
+        DividerDecoration decoration1 = new DividerDecoration(ContextCompat.getColor(this, R.color.deep_line), 2);
+        decoration1.setDrawLastItem(false);
+        decoration1.setDrawHeaderFooter(false);
+        mRecyclerView.addItemDecoration(decoration1);
 
-            @Override
-            public void onChildItemClick(int position, int groupPosition, int childPosition, View view) {
-                BookBean bean = (BookBean) mDatas.get(groupPosition).getChild(childPosition);
-                Toast.makeText(ExpandableActivity.this, "groupPos:" + groupPosition + "  childPos:" + childPosition + " child:" + bean.getName(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL,
+//                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
 
-        mAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener() {
-            @Override
-            public void onGroupItemLongClick(int position, int groupPosition, View view) {
-                String group = (String) mDatas.get(groupPosition).getGroupData();
-                showDeleteDialog(position, groupPosition, 0, true);
-            }
+        // 4、设置数据适配器
+        mRecyclerView.setAdapter(mBookAdapter);
 
-            @Override
-            public void onChildItemLongClick(int position, int groupPosition, int childPosition, View view) {
-                BookBean bean = (BookBean) mDatas.get(groupPosition).getChild(childPosition);
-                showDeleteDialog(position, groupPosition, childPosition, false);
-            }
-        });
+        // 5、设置点击监听事件
+//        mBookAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+//            @Override
+//            public void onGroupItemClick(int position, int groupPosition, View view) {
+//                String group = (String) mDatas.get(groupPosition).getGroupData();
+//                Toast.makeText(ExpandableActivity.this, "groupPos:" + groupPosition + " group:" + group, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onChildItemClick(int position, int groupPosition, int childPosition, View view) {
+//                BookBean bean = (BookBean) mDatas.get(groupPosition).getChild(childPosition);
+//                Toast.makeText(ExpandableActivity.this, "groupPos:" + groupPosition + "  childPos:" + childPosition + " child:" + bean.getName(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        mBookAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener() {
+//            @Override
+//            public void onGroupItemLongClick(int position, int groupPosition, View view) {
+//                String group = (String) mDatas.get(groupPosition).getGroupData();
+//                showDeleteDialog(position, groupPosition, 0, true);
+//            }
+//
+//            @Override
+//            public void onChildItemLongClick(int position, int groupPosition, int childPosition, View view) {
+//                BookBean bean = (BookBean) mDatas.get(groupPosition).getChild(childPosition);
+//                showDeleteDialog(position, groupPosition, childPosition, false);
+//            }
+//        });
     }
 
     @Override
@@ -127,13 +157,13 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
                 mTvShowletter.setVisibility(View.VISIBLE);
                 mTvShowletter.setText(letter);
                 for (int i = 0; i < mDatas.size(); i++) {
-                    if (letter.equals(mDatas.get(i).getGroupData())) {
+                    if (letter.equals(((String) mDatas.get(i).getGroupData()).charAt(0) + "")) {
                         for (int j = 0; j < i; j++) {
                             List childDatas = mDatas.get(j).getGroupItem().getChildDatas();
                             position += childDatas.size() + 1;
                         }
                         mManager.scrollToPositionWithOffset(position, 0);
-                        mManager.setStackFromEnd(true);
+//                        mManager.setStackFromEnd(true);
                         Logger.e("pos:" + position);
                         position = 0;
                     }
@@ -162,47 +192,304 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
     }
 
     private void initBooks() {
-        List<BookBean> bean1 = new ArrayList<>();
-        List<BookBean> bean2 = new ArrayList<>();
-        List<BookBean> bean3 = new ArrayList<>();
-        List<BookBean> bean4 = new ArrayList<>();
-        // id , pid , label , 其他属性
-        bean1.add(new BookBean("文件管理系统"));
-        bean1.add(new BookBean("游戏"));
-        bean1.add(new BookBean("文档"));
-        bean1.add(new BookBean("程序"));
-        bean2.add(new BookBean("war3"));
-        bean2.add(new BookBean("刀塔传奇"));
+        // 原始json字符串
+        String jsonData = "{\n" +
+                "    \"dataList\": [\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"释永信\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"123\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1510108537217507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171219/9025213caa410f4b01261cb580e79fae.png\",\n" +
+                "            \"nickname\": \"释永信\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1511942700462507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171218/e702fac3dd4800abb014c42c1f28a44c.png\",\n" +
+                "            \"nickname\": \"释小龙\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1511942700462507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171218/e702fac3dd4800abb014c42c1f28a44c.png\",\n" +
+                "            \"nickname\": \"ak47\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1511942700462507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171218/e702fac3dd4800abb014c42c1f28a44c.png\",\n" +
+                "            \"nickname\": \"abcd\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1511942700462507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171218/e702fac3dd4800abb014c42c1f28a44c.png\",\n" +
+                "            \"nickname\": \"李磊\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1511942700462507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171218/e702fac3dd4800abb014c42c1f28a44c.png\",\n" +
+                "            \"nickname\": \"李勇\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1511942700462507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171218/e702fac3dd4800abb014c42c1f28a44c.png\",\n" +
+                "            \"nickname\": \"莉莉\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1511942700462507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171218/e702fac3dd4800abb014c42c1f28a44c.png\",\n" +
+                "            \"nickname\": \"吴三桂\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1511942700462507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171218/e702fac3dd4800abb014c42c1f28a44c.png\",\n" +
+                "            \"nickname\": \"吴三娘\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1511942700462507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171218/e702fac3dd4800abb014c42c1f28a44c.png\",\n" +
+                "            \"nickname\": \"吴顺顺\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1510047259167507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171108/91f25858a194b90fcdf4de7b1cea17a7.png\",\n" +
+                "            \"nickname\": \"123\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1512110427103507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171201/cb7e0ae07c9c06abc85b6af8c36c893c.png\",\n" +
+                "            \"nickname\": \"经他\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1512110427103507904\",\n" +
+                "            \"headerimage\": \"http://192.168.1.124:8080/upLoadPath/WellChatForBuddhism/20171201/cb7e0ae07c9c06abc85b6af8c36c893c.png\",\n" +
+                "            \"nickname\": \"经他\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1513330325581507904\",\n" +
+                "            \"nickname\": \"法海\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"createtime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"createuser\": \"1\",\n" +
+                "            \"friendjid\": \"1513330325581507904\",\n" +
+                "            \"nickname\": \"法海\",\n" +
+                "            \"pageSize\": 20,\n" +
+                "            \"status\": 0,\n" +
+                "            \"updatetime\": \"Dec 20, 2017 5:01:00 PM\",\n" +
+                "            \"updateuser\": \"1\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
 
-        bean1.add(new BookBean("面向对象"));
-        bean2.add(new BookBean("非面向对象"));
+        // 对数据进行加工
+        ContactBean contactBean = new Gson().fromJson(jsonData, ContactBean.class);
+        List<ContactBean.DataListBean> dataList = contactBean.getDataList();
+        for (int i = 0; i < dataList.size(); i++) {
+            String nickname = dataList.get(i).getNickname();
+            if (StringUtils.isNull(nickname)) {
+                dataList.get(i).setNickname("哈哈哈" + i);
+                String nickNamePinyin = CommonUtils.hanZiToPinyin("哈哈哈" + i);
+                dataList.get(i).setPinyin(nickNamePinyin);
+            } else {
+                String nickNamePinyin = CommonUtils.hanZiToPinyin(nickname);
+                dataList.get(i).setPinyin(nickNamePinyin);
+            }
+        }
 
-        bean2.add(new BookBean("C++"));
-        bean2.add(new BookBean("JAVA"));
-        bean2.add(new BookBean("Javascript"));
-        bean2.add(new BookBean("C"));
+        Collections.sort(dataList);
 
-        bean3.add(new BookBean("文件管理系统"));
-        bean3.add(new BookBean("游戏"));
-        bean4.add(new BookBean("文档"));
-        bean4.add(new BookBean("程序"));
-        bean4.add(new BookBean("war3"));
-        bean3.add(new BookBean("刀塔传奇"));
+        boolean isGo = false;
+        List<ContactBean.DataListBean> bean = null;
 
-        bean3.add(new BookBean("面向对象"));
-        bean4.add(new BookBean("非面向对象"));
+        for (int i = 0; i < dataList.size(); i++) {
 
-        bean3.add(new BookBean("文件管理系统"));
-        bean3.add(new BookBean("游戏"));
-        bean4.add(new BookBean("文档"));
-        bean4.add(new BookBean("程序"));
-        bean4.add(new BookBean("war3"));
-        bean4.add(new BookBean("刀塔传奇"));
+            if (!isGo) {
+                bean = new ArrayList<>();
+                bean.add(dataList.get(i));
+            }
+            if (i + 1 < dataList.size()) {
+                String bi = dataList.get(i).getPinyin().charAt(0) + "";
+                String beibi = dataList.get(i + 1).getPinyin().charAt(0) + "";
+                if (StringUtils.isEqual(bi, beibi)) {
+                    bean.add(dataList.get(i + 1));
+                    isGo = true;
+                } else {
+                    isGo = false;
+                }
+            } else {
+                isGo = false;
+            }
+            if (!isGo) {
+                mDatas.add(new RecyclerViewData(dataList.get(i).getPinyin(), bean, true));
+            }
+        }
 
-        mDatas.add(new RecyclerViewData("A", bean1, true));
-        mDatas.add(new RecyclerViewData("D", bean2, true));
-        mDatas.add(new RecyclerViewData("M", bean3, true));
-        mDatas.add(new RecyclerViewData("Q", bean4, true));
+//        int pos = 0;
+//        List<ContactBean.DataListBean> bean = null;
+//
+//        for (int i = 0; i < dataList.size() - 1; i++) {
+//            if (pos == 0) {
+//                bean = new ArrayList<>();
+//            }
+//            i = i + pos;
+//            pos = 0;
+//            bean.add(dataList.get(i));
+//            String one = dataList.get(i).getPinyin().charAt(0) + "";
+//            if (i + 1 < dataList.size()) {
+//                String two = dataList.get(i + 1).getPinyin().charAt(0) + "";
+//                if (StringUtils.isEqual(one, two)) {
+//                    bean.add(dataList.get(i + 1));
+//                    pos++;
+//                } else {
+//                    pos = 0;
+//                }
+//            } else {
+//                pos = 0;
+//            }
+//            if (pos == 0) {
+//                mDatas.add(new RecyclerViewData(dataList.get(i).getPinyin(), bean, true));
+//            }
+//        }
+
+//        List<BookBean> bean1 = new ArrayList<>();
+//        List<BookBean> bean2 = new ArrayList<>();
+//        List<BookBean> bean3 = new ArrayList<>();
+//        List<BookBean> bean4 = new ArrayList<>();
+//        // id , pid , label , 其他属性
+//        bean1.add(new BookBean("文件管理系统"));
+//        bean1.add(new BookBean("游戏"));
+//        bean1.add(new BookBean("文档"));
+//        bean1.add(new BookBean("程序"));
+//        bean2.add(new BookBean("war3"));
+//        bean2.add(new BookBean("刀塔传奇"));
+//
+//        bean1.add(new BookBean("面向对象"));
+//        bean2.add(new BookBean("非面向对象"));
+//
+//        bean2.add(new BookBean("C++"));
+//        bean2.add(new BookBean("JAVA"));
+//        bean2.add(new BookBean("Javascript"));
+//        bean2.add(new BookBean("C"));
+//
+//        bean3.add(new BookBean("文件管理系统"));
+//        bean3.add(new BookBean("游戏"));
+//        bean4.add(new BookBean("文档"));
+//        bean4.add(new BookBean("程序"));
+//        bean4.add(new BookBean("war3"));
+//        bean3.add(new BookBean("刀塔传奇"));
+//
+//        bean3.add(new BookBean("面向对象"));
+//        bean4.add(new BookBean("非面向对象"));
+//
+//        bean3.add(new BookBean("文件管理系统"));
+//        bean3.add(new BookBean("游戏"));
+//        bean4.add(new BookBean("文档"));
+//        bean4.add(new BookBean("程序"));
+//        bean4.add(new BookBean("war3"));
+//        bean4.add(new BookBean("刀塔传奇"));
+//
+//        mDatas.add(new RecyclerViewData("A", bean1, true));
+//        mDatas.add(new RecyclerViewData("D", bean2, true));
+//        mDatas.add(new RecyclerViewData("M", bean3, true));
+//        mDatas.add(new RecyclerViewData("Q", bean4, true));
     }
 
     private void showDeleteDialog(final int position,
@@ -221,7 +508,7 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
                         } else {
                             mDatas.get(groupPosition).removeChild(childPosition);
                         }
-                        mAdapter.notifyRecyclerViewData();
+                        mBookAdapter.notifyRecyclerViewData();
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {

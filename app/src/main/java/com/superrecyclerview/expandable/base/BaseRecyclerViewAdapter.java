@@ -2,7 +2,6 @@ package com.superrecyclerview.expandable.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,9 +25,7 @@ import static com.superrecyclerview.expandable.base.BaseViewHolder.VIEW_TYPE_PAR
  */
 public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH> {
 
-    public static final String TAG = BaseRecyclerViewAdapter.class.getSimpleName();
-
-    private Context ctx;
+    private Context mContext;
     /**
      * all data
      */
@@ -54,8 +51,8 @@ public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> e
         this.itemLongClickListener = longClickListener;
     }
 
-    public BaseRecyclerViewAdapter(Context ctx, List<RecyclerViewData> datas) {
-        this.ctx = ctx;
+    public BaseRecyclerViewAdapter(Context context, List<RecyclerViewData> datas) {
+        this.mContext = context;
         this.allDatas = datas;
         setShowingDatas();
         this.notifyDataSetChanged();
@@ -92,7 +89,7 @@ public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> e
                 view = getChildView(parent);
                 break;
         }
-        return createRealViewHolder(ctx, view, viewType);
+        return createRealViewHolder(mContext, view, viewType);
     }
 
 
@@ -281,8 +278,8 @@ public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> e
         Object item = showingDatas.get(showDataPosition);
         try {
             return childDatas.get(groupPosition).indexOf(item);
-        } catch (IndexOutOfBoundsException ex) {
-            Log.e(TAG, ex.getMessage());
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
         return 0;
     }

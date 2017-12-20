@@ -11,21 +11,20 @@ import com.superrecyclerview.expandable.bean.RecyclerViewData;
 
 import java.util.List;
 
-
 /**
  * author：Drawthink
  * describe：
  * date: 2017/5/22
  */
-public class BookAdapter extends BaseRecyclerViewAdapter<String, BookBean, BookViewHolder> {
+public class BookAdapter extends BaseRecyclerViewAdapter<String, ContactBean.DataListBean, BookViewHolder> {
 
-    private Context ctx;
+    private Context mContext;
     private LayoutInflater mInflater;
 
-    public BookAdapter(Context ctx, List<RecyclerViewData> datas) {
-        super(ctx, datas);
-        mInflater = LayoutInflater.from(ctx);
-        this.ctx = ctx;
+    public BookAdapter(Context context, List<RecyclerViewData> datas) {
+        super(context, datas);
+        mInflater = LayoutInflater.from(context);
+        this.mContext = context;
     }
 
     /**
@@ -38,7 +37,7 @@ public class BookAdapter extends BaseRecyclerViewAdapter<String, BookBean, BookV
      */
     @Override
     public void onBindGroupHolder(BookViewHolder holder, int groupPos, int position, String groupData) {
-        holder.tvTitle.setText(groupData);
+        holder.tvGroup.setText(groupData.charAt(0) + "");
     }
 
     /**
@@ -51,8 +50,8 @@ public class BookAdapter extends BaseRecyclerViewAdapter<String, BookBean, BookV
      * @param childData
      */
     @Override
-    public void onBindChildpHolder(BookViewHolder holder, int groupPos, int childPos, int position, BookBean childData) {
-        holder.tvName.setText(childData.getName());
+    public void onBindChildpHolder(BookViewHolder holder, int groupPos, int childPos, int position, ContactBean.DataListBean childData) {
+        holder.tvChild.setText(childData.getNickname());
     }
 
     @Override

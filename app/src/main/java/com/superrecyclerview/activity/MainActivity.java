@@ -11,8 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,12 +31,12 @@ import com.superrecyclerview.base.BaseActivity;
 import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.bean.NewsBean;
 import com.superrecyclerview.decoration.SpaceDecoration;
+import com.superrecyclerview.dialog.Rotate3dDialog;
 import com.superrecyclerview.interfaces.OnLoadMoreListener;
 import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
 import com.superrecyclerview.interfaces.OnRefreshListener;
 import com.superrecyclerview.recyclerview.LRecyclerView;
 import com.superrecyclerview.recyclerview.LRecyclerViewAdapter;
-import com.superrecyclerview.dialog.Rotate3dDialog;
 import com.superrecyclerview.utils.ActivityUtils;
 import com.superrecyclerview.utils.CommonUtils;
 import com.superrecyclerview.utils.DensityUtil;
@@ -197,40 +197,59 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initLRecyclerView() {
-        //设置布局管理器
-        final StaggeredGridLayoutManager manager = new
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(manager);
-
-        //设置数据适配器
+        // 1、设置布局管理器
+//       LinearLayoutManager manager = new LinearLayoutManager(this);
+        GridLayoutManager  manager = new GridLayoutManager(this, 2);
+        // 2、创建数据适配器
         mAdapter = new NewsMainAdapter(mNewsBeens);
+//        mManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(int position) {
+//
+//                int itemViewType = mBookAdapter.getItemViewType(position);
+//                if (itemViewType == BaseViewHolder.VIEW_TYPE_PARENT) {
+//                    return 2;// 如果是标题，则占两个单元格
+//                }
+//                return 1;// 如果是内容，则占一个单元格
+//            }
+//        });
+        mRecyclerView.setLayoutManager(manager);
+        // 3、设置条目分隔线
+//        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setNestedScrollingEnabled(false);
+
+        SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 1));
+        decoration.setPaddingStart(true);
+        decoration.setPaddingEdgeSide(true);
+        decoration.setPaddingHeaderFooter(true);
+        decoration.isGroupRecyclerView(false);
+        mRecyclerView.addItemDecoration(decoration);
+
+//        DividerDecoration decoration1 = new DividerDecoration(ContextCompat.getColor(this, R.color.deep_line), 2);
+//        decoration1.setDrawLastItem(false);
+//        decoration1.setDrawHeaderFooter(false);
+//        mRecyclerView.addItemDecoration(decoration1);
+
+//        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL,
+//                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
+
+        // 4、设置数据适配器
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
         mRecyclerView.setAdapter(mLRecyclerViewAdapter);
 
-        //设置条目分隔线
-        mRecyclerView.setHasFixedSize(true);
-        SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 5));
-        decoration.setPaddingEdgeSide(true);
-        decoration.setPaddingHeaderFooter(true);
-        decoration.setPaddingStart(true);
-        mRecyclerView.addItemDecoration(decoration);
-//        DividerDecoration decoration1 = new DividerDecoration(ContextCompat.getColor(this, R.color.deep_line), 2);
-//        decoration1.setDrawHeaderFooter(false);
-//        decoration1.setDrawLastItem(false);
-//        mRecyclerView.addItemDecoration(decoration1);
-
-        //添加头部
+        // 添加头部
         View headerView = LayoutInflater.from(this).inflate(R.layout.inflater_header, null);
         mLRecyclerViewAdapter.addHeaderView(headerView);
         mBannerView = (Banner) headerView.findViewById(R.id.banner_view);
         mBannerView.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         mBannerView.setBannerAnimation(FlipHorizontalTransformer.class);
 
-        //下拉刷新、自动加载
+        // 下拉刷新、自动加载
         mRecyclerView.setRefreshEnabled(true);
         mRecyclerView.setLoadMoreEnabled(true);
         mRecyclerView.refreshWithPull();
 
+        // 5、设置点击监听事件
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import cn.jzvd.JZVideoPlayer;
 
 /**
  * Created by MMM on 2017/8/12.
@@ -153,7 +153,7 @@ public class VideoPlayerActivity extends BaseSwipeBackActivity {
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -162,7 +162,7 @@ public class VideoPlayerActivity extends BaseSwipeBackActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     private void initToolbar() {
