@@ -16,42 +16,42 @@ import com.superrecyclerview.stickyheader.StickyHeaderAdapter;
 import com.superrecyclerview.stickyheader.StickyHeaderDecoration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 
 /**
- * Created by MMM on 2017/8/4.
+ * Created by MMM on 2017/12/21.
  */
-
 public class StickyHeaderActivity extends BaseSwipeBackActivity {
 
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
     private SuperTestAdapter mAdapter;
-//    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+    //    private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private List<TestBean> mTestBeens = new ArrayList<>();
     private List<TestBean> mTempBeens = new ArrayList<>();
 
     {
-        mTestBeens.add(new TestBean("欠你的幸福"));
-        mTestBeens.add(new TestBean("谢谢爱"));
-        mTestBeens.add(new TestBean("一个人的星光"));
-        mTestBeens.add(new TestBean("终点"));
-        mTestBeens.add(new TestBean("孤单心事"));
-        mTestBeens.add(new TestBean("曾经太年轻"));
-        mTestBeens.add(new TestBean("你的香气"));
-        mTestBeens.add(new TestBean("远行"));
-        mTestBeens.add(new TestBean("我不想忘记你"));
-        mTestBeens.add(new TestBean("说爱我"));
-        mTestBeens.add(new TestBean("我们的纪念"));
+        mTestBeens.add(new TestBean("Z", "我们的纪念"));
+        mTestBeens.add(new TestBean("E", "孤单心事"));
+        mTestBeens.add(new TestBean("B", "一个人的星光"));
+        mTestBeens.add(new TestBean("Z", "说爱我"));
+        mTestBeens.add(new TestBean("A", "欠你的幸福"));
+        mTestBeens.add(new TestBean("D", "终点"));
+        mTestBeens.add(new TestBean("K", "远行"));
+        mTestBeens.add(new TestBean("S", "我不想忘记你"));
+        mTestBeens.add(new TestBean("B", "谢谢爱"));
+        mTestBeens.add(new TestBean("E", "曾经太年轻"));
+        mTestBeens.add(new TestBean("H", "你的香气"));
     }
 
     {
-        mTempBeens.add(new TestBean("新增01"));
-        mTempBeens.add(new TestBean("新增02"));
-        mTempBeens.add(new TestBean("新增03"));
+        mTempBeens.add(new TestBean("H", "新增01"));
+        mTempBeens.add(new TestBean("J", "新增02"));
+        mTempBeens.add(new TestBean("A", "新增03"));
     }
 
     @Override
@@ -63,6 +63,8 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
     protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
 //        initListener();// 必须先调用监听，才能自动刷新
+
+        Collections.sort(mTestBeens);// 对数据进行排序
         initRecyclerView();
     }
 
@@ -146,7 +148,7 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
 //        mRecyclerView.refresh();
 
         // 粘性头部分组的实现
-        StickyHeaderAdapter stickyHeaderAdapter = new StickyHeaderAdapter(this);
+        StickyHeaderAdapter stickyHeaderAdapter = new StickyHeaderAdapter(this, mTestBeens);
         StickyHeaderDecoration decoration = new StickyHeaderDecoration(stickyHeaderAdapter);
         decoration.setIncludeHeader(false);
         mRecyclerView.addItemDecoration(decoration);

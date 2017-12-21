@@ -8,36 +8,55 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.superrecyclerview.R;
+import com.superrecyclerview.bean.TestBean;
+import com.superrecyclerview.utils.StringUtils;
 
+import java.util.List;
 
 /**
+ * Created by MMM on 2017/12/21.
  * 当前类注释：悬浮headerAdapter
- * PackageName：com.jude.dome.sticky
- * Created by Qyang on 16/11/4
- * Email: yczx27@163.com
  */
-public class StickyHeaderAdapter implements StickyHeaderDecoration.IStickyHeaderAdapter<StickyHeaderAdapter.HeaderHolder> {
+public class StickyHeaderAdapter implements StickyHeaderDecoration
+        .IStickyHeaderAdapter<StickyHeaderAdapter.HeaderHolder> {
 
-    private LayoutInflater mInflater;
+    private List<TestBean> mDatas;
 
-    public StickyHeaderAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
+    public StickyHeaderAdapter(Context context, List<TestBean> testBeens) {
+        this.mDatas = testBeens;
     }
 
     @Override
     public long getHeaderId(int position) {
-        return position / 3;
+        //把数据放到控件上显示
+        String firstLetter = mDatas.get(position).group;
+        //分组
+        if (position == 0) {
+            //永远显示
+            return 0;
+        } else {
+            //获取上一个好友条目的拼音首字母
+            String preFirstLetter = mDatas.get(position - 1).group;
+            if (StringUtils.isEqual(preFirstLetter, firstLetter)) {
+                //相等，隐藏当前的拼音首字母
+                return position - 1;
+            } else {
+                //不相等，显示当前的拼音首字母
+                return position;
+            }
+        }
     }
 
     @Override
     public HeaderHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        final View view = mInflater.inflate(R.layout.adapter_sticky_title, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.adapter_sticky_title, parent, false);
         return new HeaderHolder(view);
     }
 
     @Override
-    public void onBindHeaderViewHolder(HeaderHolder viewholder, int position) {
-        viewholder.header.setText("第" + getHeaderId(position) + "组");
+    public void onBindHeaderViewHolder(HeaderHolder holder, int position) {
+        holder.header.setText(mDatas.get(position).group);
     }
 
     protected class HeaderHolder extends RecyclerView.ViewHolder {

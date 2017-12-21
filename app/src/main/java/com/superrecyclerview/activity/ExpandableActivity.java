@@ -1,6 +1,5 @@
 package com.superrecyclerview.activity;
 
-
 import android.animation.Animator;
 import android.content.DialogInterface;
 import android.os.Bundle;
