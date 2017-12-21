@@ -5,19 +5,19 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_client"
-            android:title="MultiType多样式"/>
+            android:title="CollapsingActivity"/>
         <item
             android:id="@+id/nav_messages"
             android:icon="@drawable/ic_client"
-            android:title="Expandable"/>
+            android:title="MultiTypeActivity"/>
         <item
             android:id="@+id/nav_friends"
             android:icon="@drawable/ic_client"
-            android:title="StickyHeader"/>
+            android:title="ExpandableActivity"/>
         <item
             android:id="@+id/nav_discussion"
             android:icon="@drawable/ic_client"
-            android:title="Parallax视差特效"/>
+            android:title="StickyHeaderActivity"/>
     </group>
 
     <item android:title="更多选项">
@@ -25,11 +25,11 @@
             <item
                 android:id="@+id/sub_setting"
                 android:icon="@drawable/ic_client"
-                android:title="设置"/>
+                android:title="视频"/>
             <item
                 android:id="@+id/sub_about"
                 android:icon="@drawable/ic_client"
-                android:title="关于"/>
+                android:title="登录"/>
         </menu>
     </item>
 

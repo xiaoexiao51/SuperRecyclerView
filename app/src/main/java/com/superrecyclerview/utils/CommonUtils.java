@@ -527,13 +527,16 @@ public class CommonUtils {
         return durationTime <= 1000;
     }
 
-    private static HanyuPinyinOutputFormat format = null;
-
-    //汉字转拼音
     public static String hanZiToPinyin(String hanZi) {
+        StringBuilder sb = new StringBuilder();
+        HanyuPinyinOutputFormat format = null;
+        //如果该汉字为空
+        if (StringUtils.isNull(hanZi)) {
+            sb.append("#");
+            return sb.toString();
+        }
         //取出字符串里面的每一个字符
         char[] chars = hanZi.toCharArray();
-        StringBuilder sb = new StringBuilder();
         if (format == null) {
             //设置输出的一个配置
             format = new HanyuPinyinOutputFormat();
@@ -567,7 +570,6 @@ public class CommonUtils {
                 }
             }
         }
-//        Log.i("test",sb.toString());
         return sb.toString();
     }
 }

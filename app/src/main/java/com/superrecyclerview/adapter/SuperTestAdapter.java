@@ -25,5 +25,6 @@ public class SuperTestAdapter extends BaseRecyclerAdapter<TestBean> {
     @Override
     protected void onBindViewHolder(BaseViewHolder holder, int position, TestBean item) {
         holder.getTextView(R.id.tv_test).setText(item.title);
+        holder.getImageView(R.id.iv_cover).setImageResource(R.drawable.ic_mztu);
     }
 }

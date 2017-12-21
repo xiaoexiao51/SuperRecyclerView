@@ -17,12 +17,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp">
+        android:layout_height="200dp">
 
         <ImageView
             android:id="@+id/iv_cover"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/tv_test"
@@ -40,11 +41,10 @@
             android:id="@+id/tv_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:background="@color/transparent_black"
             android:ellipsize="end"
             android:maxEms="4"
-            android:padding="2dp"
             android:textColor="@color/color_white"
             android:textSize="10sp"/>
 

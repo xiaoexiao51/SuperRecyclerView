@@ -37,7 +37,7 @@ import com.superrecyclerview.utils.NetworkUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
-import com.youth.banner.transformer.CubeInTransformer;
+import com.youth.banner.transformer.TabletTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,38 +74,8 @@ public class MultiTypeActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
         initToolbar();
+        initListener();// 必须先调用监听，才能自动刷新
         initRecyclerView();
-        initBannerView();
-    }
-
-    private void initBannerView() {
-        //添加头部
-        View headerView = LayoutInflater.from(this).inflate(R.layout.inflater_header, null);
-        mLRecyclerViewAdapter.addHeaderView(headerView);
-
-        // 轮播大图
-        List<Integer> imgs = new ArrayList<>();
-        List<String> titles = new ArrayList<>();
-        imgs.add(R.drawable.ic_mztu);
-        imgs.add(R.drawable.ic_mztu);
-        imgs.add(R.drawable.ic_mztu);
-        titles.add("妹子图1");
-        titles.add("妹子图2");
-        titles.add("妹子图3");
-
-        final Banner mBanner = (Banner) headerView.findViewById(R.id.banner_view);
-        mBanner.setBannerAnimation(CubeInTransformer.class);
-        mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        mBanner.setBannerTitles(titles);
-        mBanner.setImages(imgs).setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                imageView.setImageResource(((int) path));
-            }
-        }).start();
-
-        //更新轮播图
-//        mBanner.update(imgs, titles);
     }
 
     @Override
@@ -113,30 +83,8 @@ public class MultiTypeActivity extends BaseActivity {
 
     }
 
-    private void initRecyclerView() {
-        //设置管理器
-        final StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(manager);
-
-        //滚动相关配置
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setNestedScrollingEnabled(false);
-
-        //设置适配器
-        mMainAdapter = new MainAdapter(new TypeFactoryList(), mVisitables);
-        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mMainAdapter);
-        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
-
-        mLRecyclerViewAdapter.setSpanSizeLookup(new LRecyclerViewAdapter.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-                Object item = mVisitables.get(position);
-                return (item instanceof HotList || item instanceof ProductList
-                        || item instanceof Header) ? gridLayoutManager.getSpanCount() : 1;
-            }
-        });
-
-        //刷新监听
+    private void initListener() {
+        // 刷新监听
         mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -151,8 +99,6 @@ public class MultiTypeActivity extends BaseActivity {
                 }, 1000);
             }
         });
-
-        //加载更多
         mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -185,12 +131,64 @@ public class MultiTypeActivity extends BaseActivity {
                 }, 1000);
             }
         });
+    }
 
-        //自动刷新
-        mRecyclerView.refresh();
+    private void initRecyclerView() {
+        // 1、创建管理器和适配器
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
+                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
+        // 2、设置管理器和适配器
+        mRecyclerView.setLayoutManager(manager);
+        mMainAdapter = new MainAdapter(new TypeFactoryList(), mVisitables);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mMainAdapter);
+        mLRecyclerViewAdapter.setSpanSizeLookup(new LRecyclerViewAdapter.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
+                Object item = mVisitables.get(position);
+                return (item instanceof HotList || item instanceof ProductList
+                        || item instanceof Header) ? gridLayoutManager.getSpanCount() : 1;
+            }
+        });
+        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
+//        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setNestedScrollingEnabled(false);
+
+        // 3、设置分割线
+
+        // 下拉刷新、自动加载
         mRecyclerView.setRefreshEnabled(true);
         mRecyclerView.setLoadMoreEnabled(true);
+        mRecyclerView.refresh();
 
+        // 添加头部
+        View headerView = LayoutInflater.from(this).inflate(R.layout.inflater_header, null);
+        mLRecyclerViewAdapter.addHeaderView(headerView);
+
+        // 轮播大图
+        List<Integer> imgs = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
+        imgs.add(R.drawable.ic_mztu);
+        imgs.add(R.drawable.ic_mztu);
+        imgs.add(R.drawable.ic_mztu);
+        titles.add("妹子图1");
+        titles.add("妹子图2");
+        titles.add("妹子图3");
+
+        Banner mBanner = (Banner) headerView.findViewById(R.id.banner_view);
+        mBanner.setBannerAnimation(TabletTransformer.class);
+        mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+        mBanner.setBannerTitles(titles);
+        mBanner.setImages(imgs).setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                imageView.setImageResource(((int) path));
+            }
+        }).start();
+
+        // 更新轮播图
+//        mBanner.update(imgs, titles);
+
+        // 4、设置监听事件
         mLRecyclerViewAdapter.setOnItemClickListener(new LRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -233,7 +231,7 @@ public class MultiTypeActivity extends BaseActivity {
 
     private void initToolbar() {
         mTvLocation.setVisibility(View.GONE);
-        mTvApptitle.setText("多条目适配");
+        mTvApptitle.setText("多样式分组");
 
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.superrecyclerview.R;
 import com.superrecyclerview.expandable.base.BaseRecyclerViewAdapter;
 import com.superrecyclerview.expandable.bean.RecyclerViewData;
+import com.superrecyclerview.utils.StringUtils;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class BookAdapter extends BaseRecyclerViewAdapter<String, ContactBean.Dat
      */
     @Override
     public void onBindGroupHolder(BookViewHolder holder, int groupPos, int position, String groupData) {
-        holder.tvGroup.setText(groupData.charAt(0) + "");
+        holder.tvGroup.setText(groupData);
     }
 
     /**
@@ -51,7 +52,11 @@ public class BookAdapter extends BaseRecyclerViewAdapter<String, ContactBean.Dat
      */
     @Override
     public void onBindChildpHolder(BookViewHolder holder, int groupPos, int childPos, int position, ContactBean.DataListBean childData) {
-        holder.tvChild.setText(childData.getNickname());
+        if (StringUtils.isNull(childData.getNickname())) {
+            holder.tvChild.setText("无名氏");
+        } else {
+            holder.tvChild.setText(childData.getNickname());
+        }
     }
 
     @Override

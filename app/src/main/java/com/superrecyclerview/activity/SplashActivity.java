@@ -74,7 +74,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void run() {
             ActivityUtils.launchActivity(SplashActivity.this, MainActivity.class);
-            overridePendingTransition(R.anim.hold, R.anim.zoom_in_exit);//缩小消失
+            overridePendingTransition(R.anim.hold, R.anim.zoom_in_exit);// 缩小消失
             finish();
         }
     };

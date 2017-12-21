@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.superrecyclerview.R;
 import com.superrecyclerview.adapter.SuperTestAdapter;
+import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.base.BaseSwipeBackActivity;
 import com.superrecyclerview.bean.TestBean;
 import com.superrecyclerview.decoration.SpaceDecoration;
@@ -26,7 +27,6 @@ import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
 import com.superrecyclerview.interfaces.OnRefreshListener;
 import com.superrecyclerview.recyclerview.LRecyclerView;
 import com.superrecyclerview.recyclerview.LRecyclerViewAdapter;
-import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.utils.CommonUtils;
 import com.superrecyclerview.utils.DensityUtil;
 import com.superrecyclerview.utils.MessageUtils;
@@ -34,6 +34,7 @@ import com.superrecyclerview.utils.NetworkUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
+import com.youth.banner.transformer.StackTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +96,7 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
     protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
         initToolbar();
+        initListener();// 必须先调用监听，才能自动刷新
         initLRecyclerView();
     }
 
@@ -103,8 +105,8 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
 
     }
 
-    private void initLRecyclerView() {
-        //滚动监听
+    private void initListener() {
+        // 滚动监听
         mRecyclerView.setLScrollListener(new LRecyclerView.LScrollListener() {
             @Override
             public void onScrollUp() {
@@ -150,7 +152,7 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
             }
         });
 
-        //刷新监听
+        // 刷新监听
         mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -168,7 +170,6 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
                 }, 1000);
             }
         });
-        //加载监听
         mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -198,26 +199,35 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
 //                }
             }
         });
+    }
 
-        //设置布局管理器
-        StaggeredGridLayoutManager manager = new
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(manager);
-
-        //设置数据适配器
+    private void initLRecyclerView() {
+        // 1、创建管理器和适配器
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
+                2, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
         mAdapter = new SuperTestAdapter(mTestBeens);
+        // 2、设置管理器和适配器
+        mRecyclerView.setLayoutManager(manager);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
         mRecyclerView.setAdapter(mLRecyclerViewAdapter);
+//        mRecyclerView.setHasFixedSize(true);
+//        mRecyclerView.setNestedScrollingEnabled(false);
 
-        //设置条目分隔线
-        mRecyclerView.setHasFixedSize(true);
-//        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL, 20, ContextCompat.getColor(this, R.color.colorPrimary)));
+        // 3、设置分割线
         SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 5));
-        decoration.setPaddingEdgeSide(false);
-        decoration.setPaddingHeaderFooter(false);
         decoration.setPaddingStart(true);
+        decoration.setPaddingEdgeSide(true);
+        decoration.setPaddingHeaderFooter(true);
+        decoration.isGroupRecyclerView(false);
         mRecyclerView.addItemDecoration(decoration);
-//        mRecyclerView.addItemDecoration(new DividerDecoration(ContextCompat.getColor(this, R.color.colorPrimary), 20, 20, 20));
+
+//        DividerDecoration decoration1 = new DividerDecoration(ContextCompat.getColor(this, R.color.deep_line), 2);
+//        decoration1.setDrawLastItem(false);
+//        decoration1.setDrawHeaderFooter(false);
+//        mRecyclerView.addItemDecoration(decoration1);
+
+//        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL,
+//                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
 
         //下拉刷新、自动加载
         mRecyclerView.setRefreshEnabled(true);
@@ -234,6 +244,7 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
         titles.add("妹子图2");
         titles.add("妹子图3");
 
+        mBannerView.setBannerAnimation(StackTransformer.class);
         mBannerView.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
         mBannerView.setBannerTitles(titles);
         mBannerView.setImages(imgs).setImageLoader(new ImageLoader() {
@@ -242,6 +253,9 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
                 imageView.setImageResource(((int) path));
             }
         }).start();
+
+        // 更新轮播图
+//        mBanner.update(imgs, titles);
 
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
 

@@ -1,7 +1,6 @@
 package com.superrecyclerview.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,8 +10,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -48,7 +47,7 @@ import com.superrecyclerview.widget.SRTipView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.loader.ImageLoader;
-import com.youth.banner.transformer.FlipHorizontalTransformer;
+import com.youth.banner.transformer.ScaleInOutTransformer;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -112,7 +111,7 @@ public class MainActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
         initToolbar();
-        initListener();//必须先调用监听，才能自动刷新
+        initListener();// 必须先调用监听，才能自动刷新
         initLRecyclerView();
     }
 
@@ -128,7 +127,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initListener() {
-        //滚动监听
+        // 滚动监听
         mRecyclerView.setLScrollListener(new LRecyclerView.LScrollListener() {
             @Override
             public void onScrollUp() {
@@ -174,7 +173,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        //刷新监听
+        // 刷新监听
         mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -197,28 +196,19 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initLRecyclerView() {
-        // 1、设置布局管理器
-//       LinearLayoutManager manager = new LinearLayoutManager(this);
-        GridLayoutManager  manager = new GridLayoutManager(this, 2);
-        // 2、创建数据适配器
+        // 1、创建管理器和适配器
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
+                2, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
         mAdapter = new NewsMainAdapter(mNewsBeens);
-//        mManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(int position) {
-//
-//                int itemViewType = mBookAdapter.getItemViewType(position);
-//                if (itemViewType == BaseViewHolder.VIEW_TYPE_PARENT) {
-//                    return 2;// 如果是标题，则占两个单元格
-//                }
-//                return 1;// 如果是内容，则占一个单元格
-//            }
-//        });
+        // 2、设置管理器和适配器
         mRecyclerView.setLayoutManager(manager);
-        // 3、设置条目分隔线
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
+        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
 //        mRecyclerView.setHasFixedSize(true);
 //        mRecyclerView.setNestedScrollingEnabled(false);
 
-        SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 1));
+        // 3、设置分割线
+        SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 5));
         decoration.setPaddingStart(true);
         decoration.setPaddingEdgeSide(true);
         decoration.setPaddingHeaderFooter(true);
@@ -233,23 +223,19 @@ public class MainActivity extends BaseActivity {
 //        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL,
 //                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
 
-        // 4、设置数据适配器
-        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
-        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
-
-        // 添加头部
-        View headerView = LayoutInflater.from(this).inflate(R.layout.inflater_header, null);
-        mLRecyclerViewAdapter.addHeaderView(headerView);
-        mBannerView = (Banner) headerView.findViewById(R.id.banner_view);
-        mBannerView.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-        mBannerView.setBannerAnimation(FlipHorizontalTransformer.class);
-
         // 下拉刷新、自动加载
         mRecyclerView.setRefreshEnabled(true);
         mRecyclerView.setLoadMoreEnabled(true);
         mRecyclerView.refreshWithPull();
 
-        // 5、设置点击监听事件
+        // 添加头部
+        View headerView = LayoutInflater.from(this).inflate(R.layout.inflater_header, null);
+        mLRecyclerViewAdapter.addHeaderView(headerView);
+        mBannerView = (Banner) headerView.findViewById(R.id.banner_view);
+        mBannerView.setBannerAnimation(ScaleInOutTransformer.class);
+        mBannerView.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+
+        // 4、设置监听事件
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
@@ -296,27 +282,19 @@ public class MainActivity extends BaseActivity {
                         mDrawerLayout.closeDrawers();
                         switch (menuItem.getItemId()) {
                             case R.id.nav_home:
-                                Intent intent = new Intent();
-                                intent.setClass(MainActivity.this, MultiTypeActivity.class);
-                                startActivity(intent);
+                                ActivityUtils.launchActivity(mContext, CollapsingActivity.class);
                                 break;
                             case R.id.nav_messages:
-                                Intent intent2 = new Intent();
-                                intent2.setClass(MainActivity.this, ExpandableActivity.class);
-                                startActivity(intent2);
+                                ActivityUtils.launchActivity(mContext, MultiTypeActivity.class);
                                 break;
                             case R.id.nav_friends:
-                                Intent intent3 = new Intent();
-                                intent3.setClass(MainActivity.this, StickyHeaderActivity.class);
-                                startActivity(intent3);
+                                ActivityUtils.launchActivity(mContext, ExpandableActivity.class);
                                 break;
                             case R.id.nav_discussion:
-                                Intent intent4 = new Intent();
-                                intent4.setClass(MainActivity.this, CollapsingActivity.class);
-                                startActivity(intent4);
+                                ActivityUtils.launchActivity(mContext, StickyHeaderActivity.class);
                                 break;
                             case R.id.sub_setting:
-                                ActivityUtils.launchActivity(MainActivity.this, VideoPlayerActivity.class);
+                                ActivityUtils.launchActivity(mContext, VideoPlayerActivity.class);
 //                                new MaterialDialog.Builder(MainActivity.this)
 //                                        .title("设置")
 //                                        .content("这是要说什么")
@@ -428,22 +406,16 @@ public class MainActivity extends BaseActivity {
         mBannerView.stopAutoPlay();
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.hold, R.anim.zoom_out_exit);//放大消失
-    }
-
     private double exitTime;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - exitTime) < 2000) {
+                overridePendingTransition(R.anim.hold, R.anim.zoom_out_exit);// 放大消失
                 finish();
-                System.exit(0);
             } else {
-                MessageUtils.showInfo(mContext, "再按一次退出程序");
+                showToast("再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             }
             return true;
