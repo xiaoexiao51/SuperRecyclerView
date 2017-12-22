@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ll_group"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/colorPrimary">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/ll_group"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/colorPrimary">
 
     <TextView
         android:id="@+id/tv_group"
@@ -13,8 +13,17 @@
         android:paddingLeft="15dp"
         android:paddingTop="12dp"
         android:text="分组"
-        android:textColor="@color/color_white"
+        android:textColor="@color/color_title"
         android:textSize="16sp"
         android:textStyle="bold"/>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/group_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|end"
+        android:padding="10dp"
+        android:src="@drawable/check_box_bg"
+        android:visibility="gone"/>
+
+</FrameLayout>

@@ -8,8 +8,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.superrecyclerview.expandable.base.BaseRecyclerViewAdapter;
 import com.superrecyclerview.expandable.base.BaseViewHolder;
+import com.superrecyclerview.expandable.base.ExRecyclerViewAdapter;
 import com.superrecyclerview.recyclerview.LRecyclerViewAdapter;
 
 /**
@@ -86,7 +86,7 @@ public class SpaceDecoration extends RecyclerView.ItemDecoration {
                 float expectedX = (mPaddingEdgeSide ? space : 0) + (expectedWidth + space) * spanIndex;
                 float originX = originWidth * spanIndex;
 
-                if (parent.getAdapter() instanceof BaseRecyclerViewAdapter) {
+                if (parent.getAdapter() instanceof ExRecyclerViewAdapter) {
                     int itemViewType = parent.getAdapter().getItemViewType(position);
                     if (itemViewType == BaseViewHolder.VIEW_TYPE_PARENT) {
                         outRect.left = 0;

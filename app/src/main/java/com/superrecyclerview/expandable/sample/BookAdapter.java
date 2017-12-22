@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.expandable.base.BaseRecyclerViewAdapter;
+import com.superrecyclerview.expandable.base.ExRecyclerViewAdapter;
 import com.superrecyclerview.expandable.bean.RecyclerViewData;
 import com.superrecyclerview.utils.StringUtils;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * describe：
  * date: 2017/5/22
  */
-public class BookAdapter extends BaseRecyclerViewAdapter<String, ContactBean.DataListBean, BookViewHolder> {
+public class BookAdapter extends ExRecyclerViewAdapter<String, ContactBean.DataListBean, BookViewHolder> {
 
     private Context mContext;
     private LayoutInflater mInflater;

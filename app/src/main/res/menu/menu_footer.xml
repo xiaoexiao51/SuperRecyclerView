@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_client"
             android:title="MultiTypeActivity"/>
         <item
+            android:id="@+id/nav_jsons"
+            android:icon="@drawable/ic_client"
+            android:title="Json2BeanActivity"/>
+        <item
             android:id="@+id/nav_friends"
             android:icon="@drawable/ic_client"
             android:title="ExpandableActivity"/>

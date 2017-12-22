@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.superrecyclerview.expandable.bean.BaseItem;
 import com.superrecyclerview.expandable.bean.GroupItem;
 import com.superrecyclerview.expandable.bean.RecyclerViewData;
+import com.superrecyclerview.expandable.sample.Json2Bean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,8 @@ import static com.superrecyclerview.expandable.base.BaseViewHolder.VIEW_TYPE_PAR
  * S :child  data
  * VH :ViewHolder
  */
-public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class ExRecyclerViewAdapter<T, S, VH extends BaseViewHolder>
+        extends RecyclerView.Adapter<VH> {
 
     private Context mContext;
     /**
@@ -40,18 +42,7 @@ public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> e
      */
     private List<List<S>> childDatas;
 
-    private OnItemClickListener itemClickListener;
-    private OnItemLongClickListener itemLongClickListener;
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.itemClickListener = listener;
-    }
-
-    public void setOnItemLongClickListener(OnItemLongClickListener longClickListener) {
-        this.itemLongClickListener = longClickListener;
-    }
-
-    public BaseRecyclerViewAdapter(Context context, List<RecyclerViewData> datas) {
+    public ExRecyclerViewAdapter(Context context, List<RecyclerViewData> datas) {
         this.mContext = context;
         this.allDatas = datas;
         setShowingDatas();
@@ -91,7 +82,6 @@ public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> e
         }
         return createRealViewHolder(mContext, view, viewType);
     }
-
 
     @Override
     public void onBindViewHolder(final VH holder, final int position) {
@@ -147,7 +137,6 @@ public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> e
             });
         }
     }
-
 
     /**
      * setup showing datas
@@ -278,8 +267,8 @@ public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> e
         Object item = showingDatas.get(showDataPosition);
         try {
             return childDatas.get(groupPosition).indexOf(item);
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
+        } catch (IndexOutOfBoundsException ex) {
+            ex.printStackTrace();
         }
         return 0;
     }
@@ -325,6 +314,7 @@ public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> e
     public boolean canExpandClick() {
         return true;
     }
+
     /**
      * 对原数据进行增加删除，调用此方法进行notify
      */
@@ -333,22 +323,101 @@ public abstract class BaseRecyclerViewAdapter<T, S, VH extends BaseViewHolder> e
         setShowingDatas();
     }
 
+    private OnItemClickListener itemClickListener;
+    private OnItemLongClickListener itemLongClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener longClickListener) {
+        this.itemLongClickListener = longClickListener;
+    }
+
     /**
      * 单击事件
      */
-   public interface OnItemClickListener {
-        /** position 当前在列表中的position*/
+    public interface OnItemClickListener {
         void onGroupItemClick(int position, int groupPosition, View view);
 
         void onChildItemClick(int position, int groupPosition, int childPosition, View view);
     }
 
     /**
-     * 长按事件
+     * 双击事件
      */
-   public interface OnItemLongClickListener {
+    public interface OnItemLongClickListener {
         void onGroupItemLongClick(int position, int groupPosition, View view);
 
         void onChildItemLongClick(int position, int groupPosition, int childPosition, View view);
+    }
+
+    /**
+     * 获取已选栏目的信息
+     *
+     * @return
+     */
+    public String getMasterjids() {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < allDatas.size(); i++) {
+            List<Json2Bean.FashiBean> childDatas = allDatas.get(i).getGroupItem().getChildDatas();
+            for (int j = 0; j < childDatas.size(); j++) {
+                if (childDatas.get(j).isCheck()) {
+                    sb.append(childDatas.get(j).getName());
+                    sb.append(",");
+                }
+            }
+        }
+        if (sb.length() != 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 单组是否全选
+     *
+     * @param groupPos
+     * @param isCheck
+     */
+    public void multiCheck4OneGroup(int groupPos, boolean isCheck) {
+        List<Json2Bean.FashiBean> childDatas = allDatas.get(groupPos).getGroupItem().getChildDatas();
+        for (int i = 0; i < childDatas.size(); i++) {
+            childDatas.get(i).setCheck(isCheck);
+        }
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 全组是否全选
+     *
+     * @param isCheck
+     */
+    public void multiCheck4AllGroup(boolean isCheck) {
+        for (int i = 0; i < allDatas.size(); i++) {
+            List<Json2Bean.FashiBean> childDatas = allDatas.get(i).getGroupItem().getChildDatas();
+            for (int j = 0; j < childDatas.size(); j++) {
+                childDatas.get(j).setCheck(isCheck);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 单组是否全选
+     *
+     * @param groupPos
+     * @param allCheck
+     * @return
+     */
+    public boolean isAllCheck4OneGroup(int groupPos, boolean allCheck) {
+        List<Json2Bean.FashiBean> childDatas = allDatas.get(groupPos).getGroupItem().getChildDatas();
+        boolean isAllCheck = allCheck;
+        for (int i = 0; i < childDatas.size(); i++) {
+            if (!childDatas.get(i).isCheck()) {
+                isAllCheck = !allCheck;
+            }
+        }
+        return isAllCheck;
     }
 }

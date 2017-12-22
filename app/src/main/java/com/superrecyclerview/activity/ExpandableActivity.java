@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.superrecyclerview.R;
 import com.superrecyclerview.base.BaseSwipeBackActivity;
 import com.superrecyclerview.decoration.DividerDecoration;
-import com.superrecyclerview.expandable.base.BaseRecyclerViewAdapter;
+import com.superrecyclerview.expandable.base.ExRecyclerViewAdapter;
 import com.superrecyclerview.expandable.bean.RecyclerViewData;
 import com.superrecyclerview.expandable.sample.BookAdapter;
 import com.superrecyclerview.expandable.sample.ContactBean;
@@ -69,15 +69,10 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
         //获取数据
         initBooks();
         initQuickIndexBar();
-        initLRecyclerView();
+        initRecyclerView();
     }
 
-    @Override
-    protected void initData() {
-
-    }
-
-    private void initLRecyclerView() {
+    private void initRecyclerView() {
         // 1、创建管理器和适配器
         mManager = new LinearLayoutManager(this);
 //        mManager = new GridLayoutManager(this, 2);
@@ -116,7 +111,7 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
 //                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
 
         // 4、设置监听事件
-        mBookAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+        mBookAdapter.setOnItemClickListener(new ExRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onGroupItemClick(int position, int groupPosition, View view) {
                 String group = (String) mDatas.get(groupPosition).getGroupData();
@@ -132,7 +127,7 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
             }
         });
 
-        mBookAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener() {
+        mBookAdapter.setOnItemLongClickListener(new ExRecyclerViewAdapter.OnItemLongClickListener() {
             @Override
             public void onGroupItemLongClick(int position, int groupPosition, View view) {
                 String group = (String) mDatas.get(groupPosition).getGroupData();

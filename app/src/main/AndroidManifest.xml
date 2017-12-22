@@ -31,6 +31,10 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activity.CollapsingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SwipeBackTheme"/>
+        <activity
             android:name=".activity.MultiTypeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SwipeBackTheme"/>
@@ -39,15 +43,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/SwipeBackTheme"/>
         <activity
+            android:name=".activity.Json2BeanActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SwipeBackTheme"/>
+        <activity
             android:name=".activity.ExpandableActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SwipeBackTheme"/>
         <activity
             android:name=".activity.StickyHeaderActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SwipeBackTheme"/>
-        <activity
-            android:name=".activity.CollapsingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SwipeBackTheme"/>
         <activity

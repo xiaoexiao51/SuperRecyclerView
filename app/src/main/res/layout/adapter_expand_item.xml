@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ll_child"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/color_white">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/ll_child"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/color_white">
 
     <TextView
         android:id="@+id/tv_child"
@@ -16,4 +16,14 @@
         android:textColor="@color/color_content"
         android:textSize="16sp"/>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/child_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|end"
+        android:layout_marginRight="5dp"
+        android:padding="10dp"
+        android:src="@drawable/check_box_bg"
+        android:visibility="gone"/>
+
+</FrameLayout>

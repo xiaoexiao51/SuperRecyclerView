@@ -9,25 +9,24 @@ import java.util.List;
  * T 为group数据对象
  * S 为child数据对象
  */
-public class GroupItem<T,S> extends BaseItem{
+public class GroupItem<T, S> extends BaseItem {
 
-    /**head data*/
+    // head data
     private T groupData;
 
-    /** childDatas*/
+    // childDatas
     private List<S> childDatas;
 
-    /** 是否展开,  默认展开*/
+    // 是否展开,  默认展开
     private boolean isExpand = true;
 
-
-    /** 返回是否是父节点*/
+    // 返回是否是父节点
     @Override
     public boolean isParent() {
         return true;
     }
 
-    public boolean isExpand(){
+    public boolean isExpand() {
         return isExpand;
     }
 
@@ -41,8 +40,8 @@ public class GroupItem<T,S> extends BaseItem{
         this.isExpand = isExpand;
     }
 
-    public boolean hasChilds(){
-        if(getChildDatas() == null || getChildDatas().isEmpty() ){
+    public boolean hasChilds() {
+        if (getChildDatas() == null || getChildDatas().isEmpty()) {
             return false;
         }
         return true;
@@ -56,7 +55,7 @@ public class GroupItem<T,S> extends BaseItem{
         this.childDatas = childDatas;
     }
 
-    public void removeChild(int childPosition){
+    public void removeChild(int childPosition) {
 
     }
 

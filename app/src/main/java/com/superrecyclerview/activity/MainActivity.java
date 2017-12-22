@@ -286,6 +286,9 @@ public class MainActivity extends BaseActivity {
                             case R.id.nav_messages:
                                 ActivityUtils.launchActivity(mContext, MultiTypeActivity.class);
                                 break;
+                            case R.id.nav_jsons:
+                                ActivityUtils.launchActivity(mContext, Json2BeanActivity.class);
+                                break;
                             case R.id.nav_friends:
                                 ActivityUtils.launchActivity(mContext, ExpandableActivity.class);
                                 break;
