@@ -28,20 +28,24 @@ public class StickyHeaderAdapter implements StickyHeaderDecoration
 
     @Override
     public long getHeaderId(int position) {
-        //把数据放到控件上显示
+        // 加载更多时，角标越界
+        if (position == mDatas.size()) {
+            return 0;
+        }
+        // 把数据放到控件上显示
         String firstLetter = mDatas.get(position).group;
-        //分组
+        // 分组
         if (position == 0) {
-            //永远显示
+            // 永远显示
             return 0;
         } else {
-            //获取上一个好友条目的拼音首字母
+            // 获取上一个好友条目的拼音首字母
             String preFirstLetter = mDatas.get(position - 1).group;
             if (StringUtils.isEqual(preFirstLetter, firstLetter)) {
-                //相等，隐藏当前的拼音首字母
+                // 相等，隐藏当前的拼音首字母
                 return position - 1;
             } else {
-                //不相等，显示当前的拼音首字母
+                // 不相等，显示当前的拼音首字母
                 return position;
             }
         }

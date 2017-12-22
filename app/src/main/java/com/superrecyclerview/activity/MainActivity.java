@@ -25,11 +25,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.superrecyclerview.R;
-import com.superrecyclerview.adapter.NewsMainAdapter;
+import com.superrecyclerview.adapter.MainNewsAdapter;
 import com.superrecyclerview.base.BaseActivity;
 import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.bean.NewsBean;
-import com.superrecyclerview.decoration.SpaceDecoration;
 import com.superrecyclerview.dialog.Rotate3dDialog;
 import com.superrecyclerview.interfaces.OnLoadMoreListener;
 import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
@@ -94,7 +93,7 @@ public class MainActivity extends BaseActivity {
     private boolean isRefreshing = true;
     private boolean isLoading = false;
 
-    private NewsMainAdapter mAdapter;
+    private MainNewsAdapter mAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private List<NewsBean.T1348648517839Bean> mNewsBeens = new ArrayList<>();
 
@@ -199,7 +198,7 @@ public class MainActivity extends BaseActivity {
         // 1、创建管理器和适配器
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
                 2, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
-        mAdapter = new NewsMainAdapter(mNewsBeens);
+        mAdapter = new MainNewsAdapter(mNewsBeens);
         // 2、设置管理器和适配器
         mRecyclerView.setLayoutManager(manager);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
@@ -208,12 +207,12 @@ public class MainActivity extends BaseActivity {
 //        mRecyclerView.setNestedScrollingEnabled(false);
 
         // 3、设置分割线
-        SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 5));
-        decoration.setPaddingStart(true);
-        decoration.setPaddingEdgeSide(true);
-        decoration.setPaddingHeaderFooter(true);
-        decoration.isGroupRecyclerView(false);
-        mRecyclerView.addItemDecoration(decoration);
+//        SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 5));
+//        decoration.setPaddingStart(true);
+//        decoration.setPaddingEdgeSide(true);
+//        decoration.setPaddingHeaderFooter(true);
+//        decoration.isGroupRecyclerView(false);
+//        mRecyclerView.addItemDecoration(decoration);
 
 //        DividerDecoration decoration1 = new DividerDecoration(ContextCompat.getColor(this, R.color.deep_line), 2);
 //        decoration1.setDrawLastItem(false);

@@ -11,9 +11,9 @@ import java.util.List;
  * Created by MMM on 2017/8/8.
  */
 
-public class SuperTestAdapter extends BaseRecyclerAdapter<TestBean> {
+public class StickyHeadAdapter extends BaseRecyclerAdapter<TestBean> {
 
-    public SuperTestAdapter(List<TestBean> items) {
+    public StickyHeadAdapter(List<TestBean> items) {
         super(items);
     }
 
@@ -24,7 +24,9 @@ public class SuperTestAdapter extends BaseRecyclerAdapter<TestBean> {
 
     @Override
     protected void onBindViewHolder(BaseViewHolder holder, int position, TestBean item) {
-        holder.getTextView(R.id.tv_test).setText(item.title);
+        // 绑定图片
         holder.getImageView(R.id.iv_cover).setImageResource(R.drawable.ic_mztu);
+        // 绑定标题
+        holder.getTextView(R.id.tv_test).setText(item.title);
     }
 }

@@ -2,18 +2,23 @@ package com.superrecyclerview.activity;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.adapter.SuperTestAdapter;
+import com.superrecyclerview.adapter.StickyHeadAdapter;
 import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.base.BaseSwipeBackActivity;
 import com.superrecyclerview.bean.TestBean;
 import com.superrecyclerview.decoration.DividerDecoration;
+import com.superrecyclerview.interfaces.OnLoadMoreListener;
+import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
+import com.superrecyclerview.interfaces.OnRefreshListener;
+import com.superrecyclerview.recyclerview.LRecyclerView;
+import com.superrecyclerview.recyclerview.LRecyclerViewAdapter;
 import com.superrecyclerview.stickyheader.StickyHeaderAdapter;
 import com.superrecyclerview.stickyheader.StickyHeaderDecoration;
+import com.superrecyclerview.utils.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,10 +32,10 @@ import butterknife.Bind;
 public class StickyHeaderActivity extends BaseSwipeBackActivity {
 
     @Bind(R.id.recycler_view)
-    RecyclerView mRecyclerView;
+    LRecyclerView mRecyclerView;
 
-    private SuperTestAdapter mAdapter;
-    //    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+    private StickyHeadAdapter mAdapter;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private List<TestBean> mTestBeens = new ArrayList<>();
     private List<TestBean> mTempBeens = new ArrayList<>();
 
@@ -49,9 +54,9 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
     }
 
     {
-        mTempBeens.add(new TestBean("H", "新增01"));
-        mTempBeens.add(new TestBean("J", "新增02"));
-        mTempBeens.add(new TestBean("A", "新增03"));
+        mTempBeens.add(new TestBean("栏目一", "新增栏目一01"));
+        mTempBeens.add(new TestBean("栏目二", "新增栏目二02"));
+        mTempBeens.add(new TestBean("栏目三", "新增栏目三03"));
     }
 
     @Override
@@ -62,67 +67,72 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         showSuccessStateLayout();
-//        initListener();// 必须先调用监听，才能自动刷新
-
+        initListener();// 必须先调用监听，才能自动刷新
         Collections.sort(mTestBeens);// 对数据进行排序
         initRecyclerView();
     }
 
     @Override
     protected void initData() {
-
+        mRecyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.refreshComplete(10);
+            }
+        }, 1000);
     }
 
-//    private void initListener() {
-//        // 刷新监听
-//        mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                mRecyclerView.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mRecyclerView.refreshComplete(10);
-//                        mTestBeens.addAll(0, mTempBeens);
-//                        //fix bug:crapped or attached views may not be recycled.
-//                        // isScrap:false isAttached:true
-//                        mLRecyclerViewAdapter.notifyDataSetChanged();
-//                    }
-//                }, 1000);
-//            }
-//        });
-//        mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
-//            @Override
-//            public void onLoadMore() {
-//                mRecyclerView.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mRecyclerView.refreshComplete(10);
-//                        if (NetworkUtils.isNetAvailable(mContext)) {
-//                            mAdapter.addAll(mTempBeens);
-//                        } else {
-//                            mRecyclerView.setOnNetWorkErrorListener(new OnNetWorkErrorListener() {
-//                                @Override
-//                                public void reload() {
-//                                    mRecyclerView.refreshComplete(10);
-//                                    mAdapter.addAll(mTempBeens);
-//                                }
-//                            });
-//                        }
-//                    }
-//                }, 1000);
-//            }
-//        });
-//    }
+    private void initListener() {
+        // 刷新监听
+        mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mRecyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRecyclerView.refreshComplete(10);
+                        mTestBeens.addAll(0, mTempBeens);
+                        // fix bug:crapped or attached views may not be recycled.
+                        // isScrap:false isAttached:true
+                        mLRecyclerViewAdapter.notifyDataSetChanged();
+                    }
+                }, 1000);
+            }
+        });
+        mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mRecyclerView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRecyclerView.refreshComplete(10);
+                        if (NetworkUtils.isNetAvailable(mContext)) {
+                            mAdapter.addAll(mTempBeens);
+                        } else {
+                            mRecyclerView.setOnNetWorkErrorListener(new OnNetWorkErrorListener() {
+                                @Override
+                                public void reload() {
+                                    mRecyclerView.refreshComplete(10);
+                                    mAdapter.addAll(mTempBeens);
+                                }
+                            });
+                        }
+                    }
+                }, 1000);
+            }
+        });
+    }
 
     private void initRecyclerView() {
         // 1、创建管理器和适配器
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
-                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
-        mAdapter = new SuperTestAdapter(mTestBeens);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+//        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
+//                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
+        mAdapter = new StickyHeadAdapter(mTestBeens);
         // 2、设置管理器和适配器
         mRecyclerView.setLayoutManager(manager);
-//        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
-        mRecyclerView.setAdapter(mAdapter);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
+        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
 //        mRecyclerView.setHasFixedSize(true);
 //        mRecyclerView.setNestedScrollingEnabled(false);
 
@@ -143,9 +153,9 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
 //                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
 
         // 下拉刷新、自动加载
-//        mRecyclerView.setRefreshEnabled(true);
-//        mRecyclerView.setLoadMoreEnabled(true);
-//        mRecyclerView.refresh();
+        mRecyclerView.setRefreshEnabled(true);
+        mRecyclerView.setLoadMoreEnabled(true);
+        mRecyclerView.refreshWithPull();
 
         // 粘性头部分组的实现
         StickyHeaderAdapter stickyHeaderAdapter = new StickyHeaderAdapter(this, mTestBeens);

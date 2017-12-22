@@ -17,11 +17,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.adapter.SuperTestAdapter;
+import com.superrecyclerview.adapter.CollapsingAdapter;
 import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.base.BaseSwipeBackActivity;
 import com.superrecyclerview.bean.TestBean;
-import com.superrecyclerview.decoration.SpaceDecoration;
 import com.superrecyclerview.interfaces.OnLoadMoreListener;
 import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
 import com.superrecyclerview.interfaces.OnRefreshListener;
@@ -62,7 +61,7 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
     private boolean isToTop;
 
 
-    private SuperTestAdapter mAdapter;
+    private CollapsingAdapter mAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private List<TestBean> mTestBeens = new ArrayList<>();
     private List<TestBean> mTempBeens = new ArrayList<>();
@@ -205,7 +204,7 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
         // 1、创建管理器和适配器
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
                 2, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
-        mAdapter = new SuperTestAdapter(mTestBeens);
+        mAdapter = new CollapsingAdapter(mTestBeens);
         // 2、设置管理器和适配器
         mRecyclerView.setLayoutManager(manager);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
@@ -214,12 +213,12 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
 //        mRecyclerView.setNestedScrollingEnabled(false);
 
         // 3、设置分割线
-        SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 5));
-        decoration.setPaddingStart(true);
-        decoration.setPaddingEdgeSide(true);
-        decoration.setPaddingHeaderFooter(true);
-        decoration.isGroupRecyclerView(false);
-        mRecyclerView.addItemDecoration(decoration);
+//        SpaceDecoration decoration = new SpaceDecoration(CommonUtils.dip2px(this, 5));
+//        decoration.setPaddingStart(true);
+//        decoration.setPaddingEdgeSide(true);
+//        decoration.setPaddingHeaderFooter(true);
+//        decoration.isGroupRecyclerView(false);
+//        mRecyclerView.addItemDecoration(decoration);
 
 //        DividerDecoration decoration1 = new DividerDecoration(ContextCompat.getColor(this, R.color.deep_line), 2);
 //        decoration1.setDrawLastItem(false);
