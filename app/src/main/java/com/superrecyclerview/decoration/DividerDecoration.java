@@ -16,6 +16,7 @@ import com.superrecyclerview.recyclerview.LRecyclerViewAdapter;
  * EasyRecyclerView
  */
 public class DividerDecoration extends RecyclerView.ItemDecoration {
+
     private ColorDrawable mColorDrawable;
     private int mHeight;
     private int mPaddingLeft;
@@ -28,9 +29,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         this.mHeight = height;
     }
 
-    public DividerDecoration(int color, int height, int paddingLeft, int paddingRight) {
-        this.mColorDrawable = new ColorDrawable(color);
-        this.mHeight = height;
+    public void setDividerPadding(int paddingLeft, int paddingRight) {
         this.mPaddingLeft = paddingLeft;
         this.mPaddingRight = paddingRight;
     }

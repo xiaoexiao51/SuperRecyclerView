@@ -20,7 +20,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="?attr/colorPrimary"
+                android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
                 <TextView
@@ -39,31 +39,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Toolbar"
+                    android:text="通讯录"
                     android:textColor="@color/color_white"
                     android:textSize="18sp"/>
+
+                <FrameLayout
+                    android:id="@+id/fl_love"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right">
+
+                    <TextView
+                        android:id="@+id/tv_love"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_love"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/color_white"
+                        android:textSize="10sp"/>
+                </FrameLayout>
 
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.AppBarLayout>
 
-        <!-- 程序主体内容显示区域 -->
         <com.superrecyclerview.recyclerview.LRecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_white"
             android:clipToPadding="false"
+            android:splitMotionEvents="false"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:clickable="true"
-            android:src="@drawable/ic_share"/>
+        <TextView
+            android:id="@+id/tv_showletter"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shap_quickindexbar"
+            android:gravity="center"
+            android:textColor="@color/color_white"
+            android:textSize="28sp"
+            android:visibility="invisible"/>
+
+        <com.superrecyclerview.widget.QuickIndexBar
+            android:id="@+id/qb_indexbar"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginTop="50dp"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

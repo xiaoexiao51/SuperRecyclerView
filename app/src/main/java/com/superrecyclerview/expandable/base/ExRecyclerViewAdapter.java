@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.superrecyclerview.expandable.bean.BaseItem;
 import com.superrecyclerview.expandable.bean.GroupItem;
 import com.superrecyclerview.expandable.bean.RecyclerViewData;
 import com.superrecyclerview.expandable.sample.Json2Bean;
@@ -191,7 +190,7 @@ public abstract class ExRecyclerViewAdapter<T, S, VH extends BaseViewHolder>
             }
         }
 
-        List<BaseItem> tempChilds;
+        List<GroupItem> tempChilds;
         if (((GroupItem) item).hasChilds()) {
             tempChilds = ((GroupItem) item).getChildDatas();
             ((GroupItem) item).onExpand();
@@ -225,7 +224,7 @@ public abstract class ExRecyclerViewAdapter<T, S, VH extends BaseViewHolder>
             return -1;
         }
         int tempSize = showingDatas.size();
-        List<BaseItem> tempChilds;
+        List<GroupItem> tempChilds;
         if (((GroupItem) item).hasChilds()) {
             tempChilds = ((GroupItem) item).getChildDatas();
             ((GroupItem) item).onExpand();
@@ -253,6 +252,18 @@ public abstract class ExRecyclerViewAdapter<T, S, VH extends BaseViewHolder>
         for (int i = 0; i < childDatas.size(); i++) {
             if (childDatas.get(i).contains(item)) {
                 return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getPositionGroup(int groupPos) {
+        for (int j = 0; j < showingDatas.size(); j++) {
+            Object item = showingDatas.get(j);
+            if (item instanceof GroupItem) {
+                if (item.equals(allDatas.get(groupPos).getGroupItem())) {
+                    return j;
+                }
             }
         }
         return -1;

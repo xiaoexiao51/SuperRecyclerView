@@ -42,7 +42,6 @@ public class Json2BeanActivity extends BaseSwipeBackActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        showSuccessStateLayout();
         //获取数据
         initJsons();
         initRecyclerView();
@@ -60,12 +59,8 @@ public class Json2BeanActivity extends BaseSwipeBackActivity {
         // 封装javabean
         List<Json2Bean> json2Bean = new Gson().fromJson(jsonData, new TypeToken<List<Json2Bean>>() {
         }.getType());
+
         // 初始化数据Beans
-        initJson2Beans(json2Bean);
-    }
-
-    private void initJson2Beans(List<Json2Bean> json2Bean) {
-
         for (int i = 0; i < json2Bean.size(); i++) {
 
             List<Json2Bean.FashiBean> fashi = json2Bean.get(i).getFashi();
@@ -114,7 +109,7 @@ public class Json2BeanActivity extends BaseSwipeBackActivity {
         decoration1.setDrawHeaderFooter(false);
         mRecyclerView.addItemDecoration(decoration1);
 
-//        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL,
+//        mRecyclerView.addItemDecoration(new SimpleDecoration(this, LinearLayout.HORIZONTAL,
 //                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
 
         // 4、设置监听事件

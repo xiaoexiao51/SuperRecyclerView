@@ -32,6 +32,10 @@ import java.util.List;
 
 import butterknife.Bind;
 
+/**
+ * Created by MMM on 2017/12/25.
+ * 新闻详情页面
+ */
 public class NewsDetailActivity extends BaseSwipeBackActivity {
 
     @Bind(R.id.coor_layout)
@@ -55,7 +59,6 @@ public class NewsDetailActivity extends BaseSwipeBackActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        showSuccessStateLayout();
         //图片模糊处理
 //        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_mztu);
 //        Bitmap overlay = BlurImageUtils.blur(bitmap, 2, 2); //数字越大越模糊

@@ -72,7 +72,6 @@ public class MultiTypeActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        showSuccessStateLayout();
         initToolbar();
         initListener();// 必须先调用监听，才能自动刷新
         initRecyclerView();

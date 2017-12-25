@@ -28,7 +28,7 @@ public class QuickIndexBar extends View {
     private Context context;
     private int fontsize;
     private int yellow = 0xffA18206;
-    private int black = 0xff7B7B7B;
+    private int black = 0xff5c5c5c;
     private int mid_transparent = 0x33000000;
     private int transparent = 0x00000000;
 

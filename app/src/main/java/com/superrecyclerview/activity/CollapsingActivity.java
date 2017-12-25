@@ -93,15 +93,9 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        showSuccessStateLayout();
         initToolbar();
         initListener();// 必须先调用监听，才能自动刷新
         initLRecyclerView();
-    }
-
-    @Override
-    protected void initData() {
-
     }
 
     private void initListener() {
@@ -127,25 +121,16 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
                     isToTop = true;
                     isToBot = false;
                 }
-//                if (distanceY <= 0) {
-//                    mToolbar.setBackgroundColor(Color.argb(0, 63, 81, 181));
-//                } else if (distanceY > 0 && distanceY <= DensityUtil.dip2px(MainActivity.this, 100)) {
-//                    float scale = (float) distanceY / DensityUtil.dip2px(MainActivity.this, 100);
-//                    float alpha = (255 * scale);
-//                    mToolbar.setBackgroundColor(Color.argb((int) alpha, 63, 81, 181));
-//                } else {
-//                    mToolbar.setBackgroundColor(Color.argb(255, 63, 81, 181));
-//                }
             }
 
             @Override
             public void onScrollStateChanged(int state) {
                 switch (state) {
-                    case RecyclerView.SCROLL_STATE_IDLE://静止
+                    case RecyclerView.SCROLL_STATE_IDLE:// 静止
                         break;
-                    case RecyclerView.SCROLL_STATE_DRAGGING://拖动
+                    case RecyclerView.SCROLL_STATE_DRAGGING:// 拖动
                         break;
-                    case RecyclerView.SCROLL_STATE_SETTLING://滑翔
+                    case RecyclerView.SCROLL_STATE_SETTLING:// 滑翔
                         break;
                 }
             }
@@ -155,10 +140,6 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
         mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                mAdapter.clear();
-//                mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
-//                mCurrentCount = 0;
-//                requestData();
                 mRecyclerView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -189,13 +170,6 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
                         }
                     }
                 }, 1000);
-//                if (mCurrentCount < TOTAL_COUNT) {
-//                    // loading more
-//                    requestData();
-//                } else {
-//                    //the end
-//                    mRecyclerView.setNoMore(true);
-//                }
             }
         });
     }
@@ -225,10 +199,10 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
 //        decoration1.setDrawHeaderFooter(false);
 //        mRecyclerView.addItemDecoration(decoration1);
 
-//        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL,
+//        mRecyclerView.addItemDecoration(new SimpleDecoration(this, LinearLayout.HORIZONTAL,
 //                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
 
-        //下拉刷新、自动加载
+        // 下拉刷新、自动加载
         mRecyclerView.setRefreshEnabled(true);
         mRecyclerView.setLoadMoreEnabled(true);
         mRecyclerView.refresh();
@@ -256,6 +230,7 @@ public class CollapsingActivity extends BaseSwipeBackActivity {
         // 更新轮播图
 //        mBanner.update(imgs, titles);
 
+        // 4、设置监听事件
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
 
             @Override

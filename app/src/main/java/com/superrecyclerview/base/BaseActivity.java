@@ -64,16 +64,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         // 标题栏用户中心图标
         initToolbarListener();
+        setStatebarAlpha();// 本项目MD设计风格，故设置状态栏透明
     }
 
     private void initToolbarListener() {
-        setStatebarAlpha();
-        setToolMoreIcon(R.drawable.ic_more, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                startActivity(new Intent(mContext, AboutActivity.class));
-            }
-        });
+//        setToolMoreIcon(R.drawable.ic_toolbar_user, new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(mContext, CurrentDetailActivity.class));
+//            }
+//        });
     }
 
     /**
@@ -173,7 +173,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 初始化Toolbar标题栏
+     * 初始化Toolbar相关
      *
      * @return
      */
@@ -188,7 +188,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowTitleEnabled(false);
             }
-            mToolbar.setNavigationIcon(R.drawable.ic_back);
+//            mToolbar.setNavigationIcon(resId);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -269,6 +269,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition(R.anim.zoom_in_entry, R.anim.zoom_in_exit);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.zoom_in_entry, R.anim.zoom_in_exit);
+    }
 
     @Override
     protected void onDestroy() {
@@ -277,4 +288,3 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        ActivityHelper.getInstance().finishActivity(this);
     }
 }
-

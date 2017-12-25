@@ -5,8 +5,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -53,9 +53,9 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
     @Bind(R.id.fl_love)
     FrameLayout mFlLove;
 
-    private List<RecyclerViewData> mDatas = new ArrayList<>();
     private BookAdapter mBookAdapter;
-    private LinearLayoutManager mManager;
+    private StaggeredGridLayoutManager mManager;
+    private List<RecyclerViewData> mDatas = new ArrayList<>();
     private Animator mLoveAnimator;
 
     @Override
@@ -65,7 +65,6 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        showSuccessStateLayout();
         //获取数据
         initBooks();
         initQuickIndexBar();
@@ -74,7 +73,8 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
 
     private void initRecyclerView() {
         // 1、创建管理器和适配器
-        mManager = new LinearLayoutManager(this);
+        mManager = new StaggeredGridLayoutManager(
+                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
 //        mManager = new GridLayoutManager(this, 2);
         mBookAdapter = new BookAdapter(this, mDatas);
 //        mManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -107,7 +107,7 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
         decoration1.setDrawHeaderFooter(false);
         mRecyclerView.addItemDecoration(decoration1);
 
-//        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL,
+//        mRecyclerView.addItemDecoration(new SimpleDecoration(this, LinearLayout.HORIZONTAL,
 //                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
 
         // 4、设置监听事件
@@ -142,8 +142,6 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
         });
     }
 
-    private int position;
-
     private void initQuickIndexBar() {
         mQbIndexbar.setOnTouchLetterListener(new QuickIndexBar.OnLetterChangeListener() {
             @Override
@@ -153,13 +151,10 @@ public class ExpandableActivity extends BaseSwipeBackActivity {
                 if (mDatas != null && mDatas.size() != 0) {
                     for (int i = 0; i < mDatas.size(); i++) {
                         if (letter.equals(mDatas.get(i).getGroupData())) {
-                            for (int j = 0; j < i; j++) {
-                                List childDatas = mDatas.get(j).getGroupItem().getChildDatas();
-                                position += childDatas.size() + 1;
-                            }
-                            mManager.scrollToPositionWithOffset(position, 0);
+                            int positionGroup = mBookAdapter.getPositionGroup(i);
+                            mManager.scrollToPositionWithOffset(positionGroup, 0);
+                            showToast("字母" + letter + "索引定位在:" + positionGroup);
 //                            mManager.setStackFromEnd(true);
-                            position = 0;
                         }
                     }
                 }

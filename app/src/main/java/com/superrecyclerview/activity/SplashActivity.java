@@ -5,29 +5,26 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.superrecyclerview.R;
+import com.superrecyclerview.base.BaseActivity;
 import com.superrecyclerview.utils.ActivityUtils;
 import com.superrecyclerview.utils.AnimHelper;
 import com.superrecyclerview.utils.CommonUtils;
-import com.superrecyclerview.utils.ScreenUtils;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * Created by MMM on 2017/8/8.
  * SplashActivity
  */
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     @Bind(R.id.iv_splash)
     ImageView mIvSplash;
@@ -35,12 +32,12 @@ public class SplashActivity extends AppCompatActivity {
     TextView mTvSplash;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this);
-        ScreenUtils.setStatusBarTranslate(getWindow());
+    protected int getViewId() {
+        return R.layout.activity_splash;
+    }
 
+    @Override
+    protected void initView(Bundle savedInstanceState) {
         //设置高斯模糊
         Glide.with(this)
                 .load(R.drawable.ic_splash)
@@ -60,8 +57,6 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         }.start();
-
-//        getPermissions();
     }
 
     @Override
@@ -74,7 +69,6 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void run() {
             ActivityUtils.launchActivity(SplashActivity.this, MainActivity.class);
-            overridePendingTransition(R.anim.hold, R.anim.zoom_in_exit);// 缩小消失
             finish();
         }
     };

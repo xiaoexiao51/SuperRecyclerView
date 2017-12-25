@@ -2,7 +2,7 @@ package com.superrecyclerview.activity;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.superrecyclerview.R;
@@ -66,20 +66,9 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        showSuccessStateLayout();
         initListener();// 必须先调用监听，才能自动刷新
         Collections.sort(mTestBeens);// 对数据进行排序
         initRecyclerView();
-    }
-
-    @Override
-    protected void initData() {
-        mRecyclerView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.refreshComplete(10);
-            }
-        }, 1000);
     }
 
     private void initListener() {
@@ -125,9 +114,8 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
 
     private void initRecyclerView() {
         // 1、创建管理器和适配器
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-//        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
-//                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
+                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
         mAdapter = new StickyHeadAdapter(mTestBeens);
         // 2、设置管理器和适配器
         mRecyclerView.setLayoutManager(manager);
@@ -149,13 +137,13 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
         decoration1.setDrawHeaderFooter(false);
         mRecyclerView.addItemDecoration(decoration1);
 
-//        mRecyclerView.addItemDecoration(new RecyclerViewDivider(this, LinearLayout.HORIZONTAL,
+//        mRecyclerView.addItemDecoration(new SimpleDecoration(this, LinearLayout.HORIZONTAL,
 //                dip2px(this, 1), ContextCompat.getColor(this, R.color.color_bg)));
 
         // 下拉刷新、自动加载
         mRecyclerView.setRefreshEnabled(true);
         mRecyclerView.setLoadMoreEnabled(true);
-        mRecyclerView.refreshWithPull();
+        mRecyclerView.refresh();
 
         // 粘性头部分组的实现
         StickyHeaderAdapter stickyHeaderAdapter = new StickyHeaderAdapter(this, mTestBeens);
