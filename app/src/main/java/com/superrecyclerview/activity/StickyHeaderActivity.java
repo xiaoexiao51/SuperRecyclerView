@@ -1,8 +1,8 @@
 package com.superrecyclerview.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SnapHelper;
 import android.view.View;
 
 import com.superrecyclerview.R;
@@ -15,6 +15,7 @@ import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
 import com.superrecyclerview.interfaces.OnRefreshListener;
 import com.superrecyclerview.recyclerview.LRecyclerView;
 import com.superrecyclerview.recyclerview.LRecyclerViewAdapter;
+import com.superrecyclerview.recyclerview.StartSnapHelper;
 import com.superrecyclerview.utils.NetworkUtils;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * Created by MMM on 2017/12/21.
+ * Created by MMM on 2017/12/25.
  */
 public class StickyHeaderActivity extends BaseSwipeBackActivity {
 
@@ -106,8 +107,9 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
 
     private void initRecyclerView() {
         // 1、创建管理器和适配器
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
-                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+//        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
+//                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
         mAdapter = new StickyHeadAdapter(mTestBeens);
         // 2、设置管理器和适配器
         mRecyclerView.setLayoutManager(manager);
@@ -117,7 +119,7 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
 //        mRecyclerView.setNestedScrollingEnabled(false);
 
         // Snaphelper实现翻页效果
-        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+        SnapHelper pagerSnapHelper = new StartSnapHelper();
         pagerSnapHelper.attachToRecyclerView(mRecyclerView);
 
         // 3、设置分割线
