@@ -6,10 +6,16 @@ import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 
 /**
  * Created by MMM on 2017/8/8.
@@ -172,5 +178,31 @@ public final class AnimHelper {
         });
         valueAnimator.setInterpolator(new AccelerateInterpolator());
         valueAnimator.start();
+    }
+
+    public static void switchBackgroundAnim(ImageView view, Bitmap bitmap) {
+        Drawable oldDrawable = view.getDrawable();
+        Drawable oldBitmapDrawable ;
+        TransitionDrawable oldTransitionDrawable = null;
+        if (oldDrawable instanceof TransitionDrawable) {
+            oldTransitionDrawable = (TransitionDrawable) oldDrawable;
+            oldBitmapDrawable = oldTransitionDrawable.findDrawableByLayerId(oldTransitionDrawable.getId(1));
+        } else if (oldDrawable instanceof BitmapDrawable) {
+            oldBitmapDrawable = oldDrawable;
+        } else {
+            oldBitmapDrawable = new ColorDrawable(0xffc2c2c2);
+        }
+
+        if (oldTransitionDrawable == null) {
+            oldTransitionDrawable = new TransitionDrawable(new Drawable[]{oldBitmapDrawable, new BitmapDrawable(bitmap)});
+            oldTransitionDrawable.setId(0, 0);
+            oldTransitionDrawable.setId(1, 1);
+            oldTransitionDrawable.setCrossFadeEnabled(true);
+            view.setImageDrawable(oldTransitionDrawable);
+        } else {
+            oldTransitionDrawable.setDrawableByLayerId(oldTransitionDrawable.getId(0), oldBitmapDrawable);
+            oldTransitionDrawable.setDrawableByLayerId(oldTransitionDrawable.getId(1), new BitmapDrawable(bitmap));
+        }
+        oldTransitionDrawable.startTransition(1000);
     }
 }

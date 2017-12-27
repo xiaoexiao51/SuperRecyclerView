@@ -61,7 +61,7 @@ public class NewsDetailActivity extends BaseSwipeBackActivity {
     protected void initView(Bundle savedInstanceState) {
         //图片模糊处理
 //        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_mztu);
-//        Bitmap overlay = BlurImageUtils.blur(bitmap, 2, 2); //数字越大越模糊
+//        Bitmap overlay = BlurImageUtils.blur(bitmap, 2, 2); // 数字越大越模糊
 //        mCoorLayout.setBackgroundDrawable(new BitmapDrawable(getResources(), overlay));
 
         //磁盘缓存
