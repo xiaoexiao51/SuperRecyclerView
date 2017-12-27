@@ -19,7 +19,7 @@ public class StickyHeadAdapter extends BaseRecyclerAdapter<TestBean> {
 
     @Override
     protected int getLayoutId(int viewType) {
-        return R.layout.adapter_news_item;
+        return R.layout.adapter_sticky_item;
     }
 
     @Override

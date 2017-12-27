@@ -68,7 +68,8 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
             android:clickable="true"
-            android:src="@drawable/ic_share"/>
+            android:src="@drawable/ic_share"
+            android:visibility="gone"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
