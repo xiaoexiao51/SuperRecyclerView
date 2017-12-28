@@ -21,8 +21,8 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
     private int mHeight;
     private int mPaddingLeft;
     private int mPaddingRight;
-    private boolean mDrawLastItem = true;
-    private boolean mDrawHeaderFooter = false;
+    private boolean mDrawLastItem;
+    private boolean mDrawHeaderFooter;
 
     public DividerDecoration(int color, int height) {
         this.mColorDrawable = new ColorDrawable(color);
@@ -44,15 +44,18 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
         int position = parent.getChildAdapterPosition(view);
         int orientation = 0;
         int headerCount = 0, footerCount = 0;
+
         if (parent.getAdapter() instanceof LRecyclerViewAdapter) {
             headerCount = ((LRecyclerViewAdapter) parent.getAdapter()).getHeaderViewsCount() + 1;
             footerCount = ((LRecyclerViewAdapter) parent.getAdapter()).getFooterViewsCount();
         }
 
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+
         if (layoutManager instanceof StaggeredGridLayoutManager) {
             orientation = ((StaggeredGridLayoutManager) layoutManager).getOrientation();
         } else if (layoutManager instanceof GridLayoutManager) {
@@ -70,7 +73,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 
         if (parent.getAdapter() == null) {
             return;
@@ -82,13 +85,12 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         if (parent.getAdapter() instanceof LRecyclerViewAdapter) {
             headerCount = ((LRecyclerViewAdapter) parent.getAdapter()).getHeaderViewsCount() + 1;
             footerCount = ((LRecyclerViewAdapter) parent.getAdapter()).getFooterViewsCount();
-            dataCount = ((LRecyclerViewAdapter) parent.getAdapter()).getItemCount();
+            dataCount = ((LRecyclerViewAdapter) parent.getAdapter()).getItemCount() - headerCount - footerCount;
         } else {
             dataCount = parent.getAdapter().getItemCount();
         }
         int dataStartPosition = headerCount;
         int dataEndPosition = headerCount + dataCount;
-
 
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof StaggeredGridLayoutManager) {

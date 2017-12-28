@@ -166,9 +166,9 @@ public class SectionDemoActivity extends BaseSwipeBackActivity {
 //        mRecyclerView.addItemDecoration(decoration);
 
         int color = ContextCompat.getColor(this, R.color.deep_line);
-        int height = CommonUtils.dip2px(mContext, 1);
+        int height = CommonUtils.dip2px(mContext, 10);
         DividerDecoration decoration1 = new DividerDecoration(color, height);
-        decoration1.setDrawLastItem(true);
+        decoration1.setDrawLastItem(false);
         decoration1.setDrawHeaderFooter(false);
         mRecyclerView.addItemDecoration(decoration1);
 
