@@ -23,9 +23,13 @@
             android:icon="@drawable/ic_client"
             android:title="SectionDemoActivity"/>
         <item
-            android:id="@+id/nav_discussion"
+            android:id="@+id/nav_snapbanner"
             android:icon="@drawable/ic_client"
-            android:title="StickyHeaderActivity"/>
+            android:title="SnapBannerActivity"/>
+        <item
+            android:id="@+id/nav_snapheader"
+            android:icon="@drawable/ic_client"
+            android:title="SnapHeaderActivity"/>
     </group>
 
     <item android:title="更多选项">

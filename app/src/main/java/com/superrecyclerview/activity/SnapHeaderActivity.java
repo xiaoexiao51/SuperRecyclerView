@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.adapter.StickyHeadAdapter;
+import com.superrecyclerview.adapter.SnapHeaderAdapter;
 import com.superrecyclerview.base.BaseRecyclerAdapter;
 import com.superrecyclerview.base.BaseSwipeBackActivity;
 import com.superrecyclerview.bean.TestBean;
@@ -34,14 +34,14 @@ import butterknife.Bind;
 /**
  * Created by MMM on 2017/12/25.
  */
-public class StickyHeaderActivity extends BaseSwipeBackActivity {
+public class SnapHeaderActivity extends BaseSwipeBackActivity {
 
     @Bind(R.id.recycler_view)
     LRecyclerView mRecyclerView;
     @Bind(R.id.iv_background)
     ImageView mIvBackground;
 
-    private StickyHeadAdapter mAdapter;
+    private SnapHeaderAdapter mHeaderAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private List<TestBean> mTestBeens = new ArrayList<>();
     private List<TestBean> mTempBeens = new ArrayList<>();
@@ -61,7 +61,7 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
 
     @Override
     protected int getViewId() {
-        return R.layout.activity_sticky_header;
+        return R.layout.activity_snap_header;
     }
 
     @Override
@@ -157,7 +157,7 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
                     public void run() {
                         mRecyclerView.refreshComplete(10);
                         if (NetworkUtils.isNetAvailable(mContext)) {
-                            mAdapter.addAll(mTempBeens);
+                            mHeaderAdapter.addAll(mTempBeens);
                             int position = mLayoutManager.findFirstVisibleItemPosition();
                             mRecyclerView.smoothScrollToPosition(position);
                         } else {
@@ -165,7 +165,7 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
                                 @Override
                                 public void reload() {
                                     mRecyclerView.refreshComplete(10);
-                                    mAdapter.addAll(mTempBeens);
+                                    mHeaderAdapter.addAll(mTempBeens);
                                     int position = mLayoutManager.findFirstVisibleItemPosition();
                                     mRecyclerView.smoothScrollToPosition(position);
                                 }
@@ -182,10 +182,10 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
         mLayoutManager = new SmoothLayoutManager(mContext);
 //        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
 //                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
-        mAdapter = new StickyHeadAdapter(mTestBeens);
+        mHeaderAdapter = new SnapHeaderAdapter(mTestBeens);
         // 2、设置管理器和适配器
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mHeaderAdapter);
         mRecyclerView.setAdapter(mLRecyclerViewAdapter);
 //        mRecyclerView.setHasFixedSize(true);
 //        mRecyclerView.setNestedScrollingEnabled(false);
@@ -208,7 +208,7 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
 //        mRecyclerView.addItemDecoration(decoration);
 
         // 4、设置监听事件
-        mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+        mHeaderAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 showToast(mTestBeens.get(position).title);

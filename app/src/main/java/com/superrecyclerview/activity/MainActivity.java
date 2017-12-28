@@ -291,8 +291,11 @@ public class MainActivity extends BaseActivity {
                             case R.id.nav_friends:
                                 ActivityUtils.launchActivity(mContext, ExpandableActivity.class);
                                 break;
-                            case R.id.nav_discussion:
-                                ActivityUtils.launchActivity(mContext, StickyHeaderActivity.class);
+                            case R.id.nav_snapbanner:
+                                ActivityUtils.launchActivity(mContext, SnapBannerActivity.class);
+                                break;
+                            case R.id.nav_snapheader:
+                                ActivityUtils.launchActivity(mContext, SnapHeaderActivity.class);
                                 break;
                             case R.id.nav_section:
                                 ActivityUtils.launchActivity(mContext, SectionDemoActivity.class);

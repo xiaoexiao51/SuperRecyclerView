@@ -11,15 +11,20 @@ import java.util.List;
  * Created by MMM on 2017/8/8.
  */
 
-public class StickyHeadAdapter extends BaseRecyclerAdapter<TestBean> {
+public class SnapBannerAdapter extends BaseRecyclerAdapter<TestBean> {
 
-    public StickyHeadAdapter(List<TestBean> items) {
+    public SnapBannerAdapter(List<TestBean> items) {
         super(items);
     }
 
     @Override
     protected int getLayoutId(int viewType) {
-        return R.layout.adapter_sticky_item;
+        return R.layout.adapter_snap_banner_item;
+    }
+
+    @Override
+    public int getItemCount() {
+        return Integer.MAX_VALUE;
     }
 
     @Override

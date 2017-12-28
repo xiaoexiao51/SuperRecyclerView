@@ -55,7 +55,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/SwipeBackTheme"/>
         <activity
-            android:name=".activity.StickyHeaderActivity"
+            android:name=".activity.SnapBannerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SwipeBackTheme"/>
+        <activity
+            android:name=".activity.SnapHeaderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SwipeBackTheme"/>
 
