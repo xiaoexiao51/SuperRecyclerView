@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 
 /**
  * Created by MMM on 2017/12/28.
+ * 平滑滚动布局管理器
  */
 public class SmoothLayoutManager extends LinearLayoutManager {
 
