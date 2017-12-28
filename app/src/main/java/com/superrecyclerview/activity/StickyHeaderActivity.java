@@ -3,13 +3,11 @@ package com.superrecyclerview.activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.superrecyclerview.R;
 import com.superrecyclerview.adapter.StickyHeadAdapter;
 import com.superrecyclerview.base.BaseRecyclerAdapter;
@@ -21,6 +19,7 @@ import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
 import com.superrecyclerview.interfaces.OnRefreshListener;
 import com.superrecyclerview.recyclerview.LRecyclerView;
 import com.superrecyclerview.recyclerview.LRecyclerViewAdapter;
+import com.superrecyclerview.recyclerview.SmoothLayoutManager;
 import com.superrecyclerview.recyclerview.StartSnapHelper;
 import com.superrecyclerview.utils.AnimHelper;
 import com.superrecyclerview.utils.CommonUtils;
@@ -31,7 +30,6 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * Created by MMM on 2017/12/25.
@@ -47,7 +45,7 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
     private List<TestBean> mTestBeens = new ArrayList<>();
     private List<TestBean> mTempBeens = new ArrayList<>();
-    private LinearLayoutManager mLayoutManager;
+    private SmoothLayoutManager mLayoutManager;
 
     {
         mTestBeens.add(new TestBean("Z", "我们的纪念"));
@@ -72,11 +70,9 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
         Collections.sort(mTestBeens);// 对数据进行排序
         initRecyclerView();
 
-        //设置高斯模糊
-        Glide.with(StickyHeaderActivity.this)
-                .load(R.drawable.ic_mztu)
-                .bitmapTransform(new BlurTransformation(StickyHeaderActivity.this, 25, 5))
-                .into(mIvBackground);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_splash);
+        Bitmap blurImage = BlurImageUtils.getBlurBitmap(mContext, bitmap, 15);
+        AnimHelper.switchBackgroundAnim(mIvBackground, blurImage);
     }
 
     private void initListener() {
@@ -104,18 +100,34 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
                         int position = mLayoutManager.findFirstVisibleItemPosition();
                         int backResource;
                         if (position % 2 == 0) {
-                            backResource = R.drawable.ic_splash;
-                        } else {
                             backResource = R.drawable.ic_mztu;
+                        } else {
+                            backResource = R.drawable.ic_splash;
                         }
-                        //设置高斯模糊
+                        // 高斯模糊
                         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), backResource);
-                        Bitmap blurImage = BlurImageUtils.getBlurBitmap(mContext, bitmap, 15); // 数字越大越模糊
+                        Bitmap blurImage = BlurImageUtils.getBlurBitmap(mContext, bitmap, 15);
                         AnimHelper.switchBackgroundAnim(mIvBackground, blurImage);
+                        // 继续滚动
+                        CommonUtils.getHandler().postDelayed(scrollRunnable, 5000);
+
+                        // 判断滚动是否到底
+                        int visibleItemCount = mLayoutManager.getChildCount();
+                        int totalItemCount = mLayoutManager.getItemCount();
+                        int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
+                        if (visibleItemCount > 0
+                                && lastVisibleItemPosition >= totalItemCount - 1
+                                && totalItemCount > visibleItemCount) {
+                            showToast("呀！玩命加载中！");
+                        }
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING:// 拖动
+                        // 停止滚动
+                        CommonUtils.getHandler().removeCallbacks(scrollRunnable);
                         break;
                     case RecyclerView.SCROLL_STATE_SETTLING:// 滑翔
+                        // 停止滚动
+                        CommonUtils.getHandler().removeCallbacks(scrollRunnable);
                         break;
                 }
             }
@@ -167,7 +179,7 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
 
     private void initRecyclerView() {
         // 1、创建管理器和适配器
-        mLayoutManager = new LinearLayoutManager(mContext);
+        mLayoutManager = new SmoothLayoutManager(mContext);
 //        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(
 //                1, StaggeredGridLayoutManager.VERTICAL);// 交错排列的Grid布局
         mAdapter = new StickyHeadAdapter(mTestBeens);
@@ -205,23 +217,23 @@ public class StickyHeaderActivity extends BaseSwipeBackActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        CommonUtils.getHandler().postDelayed(srollRunnable, 3000);
+    protected void onResume() {
+        super.onResume();
+        CommonUtils.getHandler().postDelayed(scrollRunnable, 5000);
     }
 
-    private Runnable srollRunnable = new Runnable() {
+    private Runnable scrollRunnable = new Runnable() {
         @Override
         public void run() {
             int position = mLayoutManager.findFirstVisibleItemPosition();
             mRecyclerView.smoothScrollToPosition(position + 1);
-            CommonUtils.getHandler().postDelayed(srollRunnable, 3000);
+            CommonUtils.getHandler().postDelayed(scrollRunnable, 5000);
         }
     };
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        CommonUtils.getHandler().removeCallbacks(srollRunnable);
+    protected void onPause() {
+        super.onPause();
+        CommonUtils.getHandler().removeCallbacks(scrollRunnable);
     }
 }

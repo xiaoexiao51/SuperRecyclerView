@@ -38,13 +38,13 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        //设置高斯模糊
+        // 设置高斯模糊
         Glide.with(this)
                 .load(R.drawable.ic_splash)
                 .bitmapTransform(new BlurTransformation(this, 25, 5))
                 .into(mIvSplash);
 
-        //系统提供倒计时
+        // 系统提供倒计时
         new CountDownTimer(4000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {

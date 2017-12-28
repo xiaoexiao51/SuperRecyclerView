@@ -18,7 +18,7 @@ public abstract class BaseSwipeBackActivity extends BaseActivity {
         SwipeBackHelper.onCreate(this);
         SwipeBackHelper.getCurrentPage(this)
                 .setSwipeBackEnable(true)
-                .setSwipeEdgePercent(0.5f)//可滑动的范围,0.5表示为左边50%的屏幕
+                .setSwipeEdgePercent(0.2f)//可滑动的范围,0.5表示为左边50%的屏幕
                 .setSwipeSensitivity(0.3f)//对横向滑动的敏感程度,0为迟钝 1为敏感
                 .setClosePercent(0.5f)//触发关闭百分比
                 .setScrimColor(0xFFFFCD03)//底层阴影颜色

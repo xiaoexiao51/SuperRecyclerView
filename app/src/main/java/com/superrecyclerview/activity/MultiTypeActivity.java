@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.superrecyclerview.R;
-import com.superrecyclerview.base.BaseActivity;
+import com.superrecyclerview.base.BaseSwipeBackActivity;
 import com.superrecyclerview.bean.ProductBean;
 import com.superrecyclerview.interfaces.OnLoadMoreListener;
 import com.superrecyclerview.interfaces.OnNetWorkErrorListener;
@@ -48,7 +48,7 @@ import butterknife.Bind;
  * BetterViewHolder的运用
  * http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2016/1125/6806.html
  */
-public class MultiTypeActivity extends BaseActivity {
+public class MultiTypeActivity extends BaseSwipeBackActivity {
 
     @Bind(R.id.tv_location)
     TextView mTvLocation;

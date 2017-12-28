@@ -55,7 +55,6 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
-                app:tabBackground="@drawable/ripple_item"
                 app:tabIndicatorColor="@color/color_white"
                 app:tabIndicatorHeight="3dp"/>
 

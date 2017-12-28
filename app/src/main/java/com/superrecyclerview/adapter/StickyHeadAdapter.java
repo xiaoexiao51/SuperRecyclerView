@@ -24,8 +24,14 @@ public class StickyHeadAdapter extends BaseRecyclerAdapter<TestBean> {
 
     @Override
     protected void onBindViewHolder(BaseViewHolder holder, int position, TestBean item) {
+        int imageResource;
+        if (position % 2 == 0) {
+            imageResource = R.drawable.ic_splash;
+        } else {
+            imageResource = R.drawable.ic_mztu;
+        }
         // 绑定图片
-        holder.getImageView(R.id.iv_cover).setImageResource(R.drawable.ic_mztu);
+        holder.getImageView(R.id.iv_cover).setImageResource(imageResource);
         // 绑定标题
         holder.getTextView(R.id.tv_test).setText(item.title);
     }
