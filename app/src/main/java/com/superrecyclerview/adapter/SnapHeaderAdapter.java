@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by MMM on 2017/8/8.
+ * 竖向滚动列表适配器
  */
 public class SnapHeaderAdapter extends BaseRecyclerAdapter<TestBean> {
 

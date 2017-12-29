@@ -6,7 +6,7 @@ package com.superrecyclerview.bean;
 public class TestBean implements Comparable<TestBean> {
 
     public int id;
-    public int type; // content type
+    public int type;
     public String group;
     public String title;
     public int imgRes;

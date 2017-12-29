@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * Created by MMM on 2017/8/8.
+ * 横向滚动列表适配器
  */
 public class SnapBannerAdapter extends RecyclerView.Adapter
         <SnapBannerAdapter.BannerViewHolder> {

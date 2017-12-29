@@ -26,6 +26,7 @@ import butterknife.Bind;
 
 /**
  * Created by MMM on 2017/12/25.
+ * 横向滚动列表
  */
 public class SnapBannerActivity extends BaseSwipeBackActivity {
 
