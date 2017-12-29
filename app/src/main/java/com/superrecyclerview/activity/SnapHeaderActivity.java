@@ -26,7 +26,6 @@ import com.superrecyclerview.utils.CommonUtils;
 import com.superrecyclerview.utils.NetworkUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -48,15 +47,13 @@ public class SnapHeaderActivity extends BaseSwipeBackActivity {
     private SmoothLayoutManager mLayoutManager;
 
     {
-        mTestBeens.add(new TestBean("Z", "我们的纪念"));
-        mTestBeens.add(new TestBean("B", "一个人的星光"));
-        mTestBeens.add(new TestBean("A", "欠你的幸福"));
+        mTestBeens.add(new TestBean("我们的纪念", R.drawable.ic_splash));
+        mTestBeens.add(new TestBean("一个人的星光", R.drawable.ic_mztu));
     }
 
     {
-        mTempBeens.add(new TestBean("栏目一", "新增栏目一01"));
-        mTempBeens.add(new TestBean("栏目二", "新增栏目二02"));
-        mTempBeens.add(new TestBean("栏目三", "新增栏目三03"));
+        mTempBeens.add(new TestBean("我们的纪念-新增", R.drawable.ic_splash));
+        mTempBeens.add(new TestBean("一个人的星光-新增", R.drawable.ic_mztu));
     }
 
     @Override
@@ -67,7 +64,6 @@ public class SnapHeaderActivity extends BaseSwipeBackActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         initListener();// 必须先调用监听，才能自动刷新
-        Collections.sort(mTestBeens);// 对数据进行排序
         initRecyclerView();
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_splash);
@@ -97,20 +93,17 @@ public class SnapHeaderActivity extends BaseSwipeBackActivity {
             public void onScrollStateChanged(int state) {
                 switch (state) {
                     case RecyclerView.SCROLL_STATE_IDLE:// 静止
-                        int position = mLayoutManager.findFirstVisibleItemPosition();
-                        int backResource;
-                        if (position % 2 == 0) {
-                            backResource = R.drawable.ic_mztu;
-                        } else {
-                            backResource = R.drawable.ic_splash;
-                        }
-                        // 高斯模糊
-                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), backResource);
-                        Bitmap blurImage = BlurImageUtils.getBlurBitmap(mContext, bitmap, 15);
-                        AnimHelper.switchBackgroundAnim(mIvBackground, blurImage);
                         // 继续滚动
                         CommonUtils.getHandler().postDelayed(scrollRunnable, 5000);
 
+                        int position = mLayoutManager.findFirstVisibleItemPosition() - 1;
+                        if (position >= 0) {
+                            int imgRes = mTestBeens.get(position).imgRes;
+                            // 高斯模糊
+                            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgRes);
+                            Bitmap blurImage = BlurImageUtils.getBlurBitmap(mContext, bitmap, 15);
+                            AnimHelper.switchBackgroundAnim(mIvBackground, blurImage);
+                        }
                         // 判断滚动是否到底
                         int visibleItemCount = mLayoutManager.getChildCount();
                         int totalItemCount = mLayoutManager.getItemCount();

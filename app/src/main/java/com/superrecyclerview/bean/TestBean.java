@@ -4,6 +4,7 @@ package com.superrecyclerview.bean;
  * Created by MMM on 2017/12/21.
  */
 public class TestBean implements Comparable<TestBean> {
+
     public int id;
     public int type; // content type
     public String group;
@@ -24,9 +25,9 @@ public class TestBean implements Comparable<TestBean> {
         this.title = title;
     }
 
-    public TestBean(String title, int height) {
+    public TestBean(String title, int imgRes) {
         this.title = title;
-        this.height = height;
+        this.imgRes = imgRes;
     }
 
     @Override

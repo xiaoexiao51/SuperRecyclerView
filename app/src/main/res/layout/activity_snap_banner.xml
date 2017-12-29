@@ -72,6 +72,24 @@
                 android:clipToPadding="false"
                 android:splitMotionEvents="false"/>
 
+            <!-- 用于显示小点的线性布局  -->
+            <LinearLayout
+                android:id="@+id/ll_points"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_banner_seleted"/>
+
+            </LinearLayout>
+
         </FrameLayout>
 
         <android.support.design.widget.FloatingActionButton
